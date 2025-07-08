@@ -143,16 +143,17 @@ export default function PostMoodScreen() {
                 <div className="flex flex-row min-h-0 w-[100%] px-5 gap-8"> {/* min-h-0 crucial for flex children to not overflow */}
 
                   {/* Steps Section: fixed width on desktop, full width on mobile */}
-                 <div className="relative w-[20%] rounded-2xl bg-black/20 backdrop-blur-md mr-4 h-[97%] pt-4 pb-6 pl-6  border-white/10 overflow-hidden border-r-4 border-back/10 border-l-4 xl:block hidden">
-                    {/* Top gradient border */}
-                    <div className="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-white/10 via-[#B65EFF] to-white/10 rounded-t-xl" />
+                 <div className="relative w-[20%] rounded-2xl bg-black/20 backdrop-blur-md mr-4 h-[97%] pt-4 pb-6 pl-6 border-l-2 border-r-2 border-white/10 overflow-hidden xl:block hidden">
+                  {/* Top gradient border */}
+                  <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-white/10 via-[#c58ef2] to-white/10 rounded-t-xl pointer-events-none" />
 
-                    {/* Bottom gradient border */}
-                    <div className="absolute bottom-0 left-0 w-full h-[3px] bg-gradient-to-r from-white/10 via-[#B65EFF] to-white/10 rounded-b-xl" />
+                  {/* Bottom gradient border */}
+                  <div className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-white/10 via-[#c58ef2] to-white/10 rounded-b-xl pointer-events-none" />
 
-                    {/* Actual content inside */}
-                    <MoodjiSteps steps={steps} />
-                  </div>
+                  {/* Actual content inside */}
+                  <MoodjiSteps steps={steps} />
+                </div>
+
                   {/* Mood Categories & Grid Section: Takes remaining horizontal space, stacks its children vertically */}
                   <div className="flex-1 flex flex-col min-h-0 w-[80%] justify-start items-center"> {/* min-h-0 here prevents the whole section from overflowing */}
                     {/* Moods Title */}
@@ -169,15 +170,30 @@ export default function PostMoodScreen() {
                         />
                       </div>
                       {/* Search Input */}
-                      <div className="relative sm:mb-0 my-2 mr-3">
-                        {/* <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/40 w-5 h-5" /> */}
-                        <Input
-                          placeholder="Search"
-                          value={searchQuery}
-                          onChange={(e) => setSearchQuery(e.target.value)}
-                          className="pl-3 bg-[#151517CC]/80 border-white/20 text-white w-[320px] h-[34px] rounded-full placeholder:text-white/80 placeholder:text-[10px] pb-3"
-                        />
-                      </div>
+                      <div className="relative w-[318px] my-2 sm:mb-0 mr-3 rounded-full">
+  {/* Top gradient border */}
+  <div className="absolute top-0 left-0 w-[90%] h-[1px] bg-gradient-to-r from-white/10 via-[#B65EFF] to-white/10 rounded-t-full pointer-events-none z-10 ml-4" />
+
+  {/* Bottom gradient border */}
+  <div className="absolute bottom-0 left-0 w-[90%] h-[1px] bg-gradient-to-r from-white/10 via-[#B65EFF] to-white/10 rounded-b-full pointer-events-none z-10 ml-4" />
+
+  {/* Solid left/right borders & input */}
+  <div
+    className="relative z-20 bg-[#151517CC]/80 rounded-full px-3"
+    style={{
+      borderLeft: '1px solid rgba(255,255,255,0.2)',
+      borderRight: '1px solid rgba(255,255,255,0.2)',
+    }}
+  >
+    <input
+      placeholder="Search"
+      value={searchQuery}
+      onChange={(e) => setSearchQuery(e.target.value)}
+      className="bg-transparent text-white placeholder:text-white/80 placeholder:text-[10px] h-[34px] w-full rounded-full outline-none border-none mb-1"
+    />
+  </div>
+</div>
+
                     </div>
 
                     {/* Mood Grid: This is the main scrollable area if moods don't fit vertically */}

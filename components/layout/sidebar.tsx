@@ -101,19 +101,19 @@ export function Sidebar({
           <Button
             variant="ghost"
             size="sm"
-            className="text-white/60 hover:text-white hover:bg-white/5 pr-[150px]"
+            className="text-white/60 hover:text-white hover:bg-white/5 pr-[150px] ml-2 gap-2"
             onClick={onSettingsClick}
           >
-            <Settings className="w-4 h-4 mr-2" />
+           <Image src="/icons/Setting.png" alt="menu" width={20} height={20} />
             Settings
           </Button>
           <Button
             variant="ghost"
             size="sm"
-            className="text-white/60 hover:text-white hover:bg-white/5 pr-[150px]"
+            className="text-white/60 hover:text-white hover:bg-white/5 pr-[150px] ml-2 gap-2"
             onClick={onLogoutClick}
           >
-            <LogOut className="w-4 h-4 mr-2" />
+           <Image src="/icons/Logout.svg" alt="menu" width={20} height={20} />
             Log out
           </Button>
         </div>
