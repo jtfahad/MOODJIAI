@@ -12,7 +12,7 @@ interface MoodjiStepsProps {
 
 export function MoodjiSteps({ steps }: MoodjiStepsProps) {
   return (
-    <div className="xl:flex xl:flex-col gap-8 py-4 relative lg:hidden">
+    <div className="xl:flex xl:flex-col gap-9 py-6 pb-10 relative lg:hidden">
       {steps.map((step, index) => (
         <div key={step.id} className="relative pl-12 flex items-center">
           {/* Line segment between steps */}

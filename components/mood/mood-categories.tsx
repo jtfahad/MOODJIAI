@@ -20,7 +20,7 @@ export function MoodCategories({ categories, selectedCategory, onCategorySelect 
         <Button
           key={category.id}
           variant={selectedCategory === category.id ? "outline" : "outline"}
-          className={`flex items-center gap-2 transition-all ${
+          className={`flex items-center justify-start gap-2 transition-all ${
             selectedCategory === category.id
               ? 'border-white/20 text-white hover:bg-white/10 hover:text-white bg-transparent rounded-2xl h-8'
               : 'border-white/20 text-white hover:bg-white/10 hover:text-white bg-transparent rounded-2xl h-8'

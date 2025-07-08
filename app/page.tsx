@@ -84,7 +84,7 @@ export default function PostMoodScreen() {
     >      {/* This div handles the main horizontal split (sidebar and main content) */}
       <div className="flex flex-1"> {/* flex-1 ensures this section takes up all available vertical space */}
 
-        <div className={`h-screen fixed inset-y-0 left-0 z-40 w-64 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-300 ease-in-out lg:relative lg:translate-x-0 lg:flex lg:flex-shrink-0 md:hidden`}>
+        <div className={`h-screen fixed inset-y-0 left-0 z-40 w-64 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-300 ease-in-out lg:relative lg:translate-x-0 lg:flex lg:flex-shrink-0 md:hidden hidden`}>
           <Sidebar
             profileName="Nicole Lunan"
             tokensRemaining="300 Questions"
@@ -93,14 +93,14 @@ export default function PostMoodScreen() {
             onUpgradeClick={() => console.log('Upgrade clicked')}
             onSettingsClick={() => console.log('Settings clicked')}
             onLogoutClick={() => console.log('Logout clicked')}
-            currentTokenCount={32}
+            currentTokenCount={150}
           />
         </div>
 
         {/* Overlay for mobile sidebar when open */}
         {isSidebarOpen && (
           <div
-            className="fixed inset-0 bg-black bg-opacity-50 z-30 md:hidden"
+            className="fixed inset-0 bg-black bg-opacity-50 z-30 md:hidden hidden"
             onClick={() => setIsSidebarOpen(false)}
           ></div>
         )}
@@ -175,7 +175,7 @@ export default function PostMoodScreen() {
                           placeholder="Search"
                           value={searchQuery}
                           onChange={(e) => setSearchQuery(e.target.value)}
-                          className="pl-3 bg-[#151517CC]/80 border-white/20 text-white w-[332px] h-[34px] rounded-full placeholder:text-white/80 placeholder:text-xs"
+                          className="pl-3 bg-[#151517CC]/80 border-white/20 text-white w-[332px] h-[34px] rounded-full placeholder:text-white/80 placeholder:text-[10px] pb-3"
                         />
                       </div>
                     </div>
