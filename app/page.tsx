@@ -143,7 +143,7 @@ export default function PostMoodScreen() {
                 <div className="flex flex-row min-h-0 w-[100%] px-5 gap-8"> {/* min-h-0 crucial for flex children to not overflow */}
 
                   {/* Steps Section: fixed width on desktop, full width on mobile */}
-                 <div className="relative w-[17%] rounded-2xl bg-black/20 backdrop-blur-md mr-4 h-[97%] pt-4 pb-6 pl-6 border-white/10 overflow-hidden border-r-4 border-back/10 border-l-4 xl:block hidden">
+                 <div className="relative w-[20%] rounded-2xl bg-black/20 backdrop-blur-md mr-4 h-[97%] pt-4 pb-6 pl-6  border-white/10 overflow-hidden border-r-4 border-back/10 border-l-4 xl:block hidden">
                     {/* Top gradient border */}
                     <div className="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-white/10 via-[#B65EFF] to-white/10 rounded-t-xl" />
 
@@ -169,19 +169,19 @@ export default function PostMoodScreen() {
                         />
                       </div>
                       {/* Search Input */}
-                      <div className="relative sm:mb-0 mb-2">
+                      <div className="relative sm:mb-0 my-2 mr-3">
                         {/* <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/40 w-5 h-5" /> */}
                         <Input
                           placeholder="Search"
                           value={searchQuery}
                           onChange={(e) => setSearchQuery(e.target.value)}
-                          className="pl-3 bg-[#151517CC]/80 border-white/20 text-white w-[332px] h-[34px] rounded-full placeholder:text-white/80 placeholder:text-[10px] pb-3"
+                          className="pl-3 bg-[#151517CC]/80 border-white/20 text-white w-[320px] h-[34px] rounded-full placeholder:text-white/80 placeholder:text-[10px] pb-3"
                         />
                       </div>
                     </div>
 
                     {/* Mood Grid: This is the main scrollable area if moods don't fit vertically */}
-                    <div className="flex-1 overflow-y-auto w-full">
+                    <div className="flex-1 overflow-y-auto w-full pb-4">
                       <MoodGrid
                         moods={filteredMoods}
                         selectedMood={selectedMood}

@@ -83,12 +83,9 @@ export function MainHeader({
       {/* Title and action buttons */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-[25px] leading-[41px] text-white font-hanson font-bold">
+          <h1 className="md:text-[30px] text-[20px] leading-[41px] text-white font-hanson font-bold">
             {renderTitle()}
           </h1>
-          {/* <h1 className="md:text-4xl text-2xl font-bold mb-3 text-white">
-          <Image src="/icons/Post Mood.png" alt="menu" width={200} height={200} />
-          </h1> */}
           {subtitle && (
             <p className="text-white text-[16px] font-[300]">{subtitle}</p>
           )}
@@ -97,13 +94,13 @@ export function MainHeader({
           <div className="md:flex md:flex-row sm:flex-col gap-3 sm:ml-5 ml-10">
             <Button
               variant="outline"
-              className="border-white/70 text-white hover:bg-white/10 hover:text-white bg-transparent p-3 rounded-[16px] px-10 text-[12px] mb-2"
+              className="border-white/70 text-white hover:bg-white/10 hover:text-white bg-transparent p-3 rounded-[16px] md:px-10 px-7 text-[12px] mb-2"
               onClick={onSkipClick}
             >
               Skip
             </Button>
             <Button
-              className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white p-3 rounded-[16px] px-10 text-[12px]"
+              className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white p-3 rounded-[16px] md:px-10 px-7 text-[12px]"
               onClick={onNextClick}
             >
               Next
