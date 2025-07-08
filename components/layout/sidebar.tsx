@@ -31,7 +31,7 @@ export function Sidebar({
     // Main sidebar container: flex column and takes full screen height.
     // hidden by default for mobile, but visible for larger screens using 'lg:flex'
     // Changed h-[100%] to h-screen to ensure it takes full viewport height
-    <div className="w-64 flex flex-col h-screen">
+    <div className="w-64 flex flex-col h-vh">
       {/* Logo */}
       <div className="flex p-6 pt-10 border-white/10">
         <Image src="/logos/MainLogo.svg" alt="LOGO" width={120} height={40} />
@@ -49,8 +49,8 @@ export function Sidebar({
 
       {/* User Profile - This section will remain at the bottom */}
       {/* The flex-shrink-0 ensures it doesn't shrink, and flex-1 above pushes it down */}
-      <div className="p-6 flex-shrink-0 lg:pt-0 md:pt-24 pt-24">
-        <div className='border-t py-3 px-3 border-white/10'></div>
+      <div className="p-4 flex-shrink-0">
+        <div className='border-t p-3 border-white/10'></div>
         <div className="flex flex-col bg-slate-500/10 backdrop-blur-md rounded-lg p-4">
           <div className="flex items-center gap-3 mb-4">
             {/* Profile Avatar with Online Badge */}
@@ -80,7 +80,6 @@ export function Sidebar({
             // You might want to add an onValueChange prop to TokenSlider if the parent needs to know the new value
             // onTokenChange={(newValue) => console.log(newValue)}
           />
-
 
           {/* Buttons */}
           <div className="space-y-2">

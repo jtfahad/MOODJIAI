@@ -21,9 +21,6 @@ export function MoodCard({ id, label, sublabel, gradient, isSelected, onClick }:
         gap: '10px',
         display: 'flex',
         flexDirection: 'column',
-        marginTop: '5px',
-        // justifyContent: 'space-between',
-        // alignItems: 'center'
       }}
       onClick={() => onClick(id)}
     >

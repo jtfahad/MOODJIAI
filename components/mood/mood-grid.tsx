@@ -20,7 +20,7 @@ export function MoodGrid({ moods, selectedMood, onMoodSelect }: MoodGridProps) {
       className="grid auto-fit-grid"
       style={{
         gridTemplateColumns: 'repeat(auto-fit, minmax(138px, 1fr))',
-        gap: '21px',
+        gap: '18px',
         justifyItems: 'center',
       }}
     >

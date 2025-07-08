@@ -79,12 +79,12 @@ export default function PostMoodScreen() {
   return (
     // Main container: full screen height, flex column to stack sidebar/content horizontally
     <div
-      className="h-[100%] text-white flex flex-col"
+      className="h-vh text-white flex flex-col"
       style={{ background: 'linear-gradient(90deg, #1C0841 0%, #A32478 100%)' }}
     >      {/* This div handles the main horizontal split (sidebar and main content) */}
       <div className="flex flex-1"> {/* flex-1 ensures this section takes up all available vertical space */}
 
-        <div className={`h-screen fixed inset-y-0 left-0 z-40 w-64 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-300 ease-in-out lg:relative lg:translate-x-0 lg:flex lg:flex-shrink-0 md:hidden hidden`}>
+        <div className={`h-vh fixed inset-y-0 left-0 z-40 w-64 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-300 ease-in-out lg:relative lg:translate-x-0 lg:flex lg:flex-shrink-0 md:hidden hidden`}>
           <Sidebar
             profileName="Nicole Lunan"
             tokensRemaining="300 Questions"

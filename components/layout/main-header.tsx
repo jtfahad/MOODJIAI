@@ -83,10 +83,12 @@ export function MainHeader({
       {/* Title and action buttons */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="md:text-4xl text-2xl font-bold mb-3 text-white">
-          <Image src="/icons/Post Mood.png" alt="menu" width={200} height={200} />
-            {/* {renderTitle()} */}
+          <h1 className="text-[25px] leading-[41px] text-white font-hanson font-bold">
+            {renderTitle()}
           </h1>
+          {/* <h1 className="md:text-4xl text-2xl font-bold mb-3 text-white">
+          <Image src="/icons/Post Mood.png" alt="menu" width={200} height={200} />
+          </h1> */}
           {subtitle && (
             <p className="text-white text-[16px] font-[300]">{subtitle}</p>
           )}
