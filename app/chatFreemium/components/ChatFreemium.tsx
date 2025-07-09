@@ -30,8 +30,8 @@ const ChatFreemium = () => {
 
           {/* Time Left (center) */}
           <div className="flex items-center gap-2 mb-[170px]">
-            <span className="text-[18px] font-semibold font-Inter">Time left:</span>
-            <span className="text-[18px] font-semibold text-[#FFCD38] font-Inter">00:00:00</span>
+            <span className="text-[18px] font-semibold">Time left:</span>
+            <span className="text-[18px] font-semibold text-[#FFCD38]">00:00:00</span>
           </div>
 
           {/* New Chat (right) */}
