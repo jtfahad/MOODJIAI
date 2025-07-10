@@ -39,7 +39,7 @@ const ChatInput: React.FC<ChatInputProps> = ({
       >
         <div className="flex items-center justify-between h-full">
           <div>
-            <Image className='cursor-pointer' src="/icons/Add.png" alt="Add" width={29} height={29} onClick={onAddClick} />
+            <Image className='cursor-pointer' src="/icons/Add.svg" alt="Add" width={18} height={18} onClick={onAddClick} />
           </div>
           <div className="flex-1 h-full items-center relative pl-5">
             <input
@@ -51,9 +51,9 @@ const ChatInput: React.FC<ChatInputProps> = ({
               onKeyPress={handleKeyPress}
             />
           </div>
-          <div className="flex items-center justify-end gap-2">
-            <Image className='cursor-pointer' src="/icons/Recording.png" alt="Mic" width={18} height={18} onClick={onRecordClick} />
-            <Image className='cursor-pointer' src="/icons/Send.png" alt="Send" width={18} height={18} onClick={handleSendClick} />
+          <div className="flex items-center justify-end gap-4">
+            <Image className='cursor-pointer' src="/icons/Recording.svg" alt="Mic" width={18} height={18} onClick={onRecordClick} />
+            <Image className='cursor-pointer' src="/icons/Send.svg" alt="Send" width={24} height={24} onClick={handleSendClick} />
           </div>
         </div>
 

@@ -70,7 +70,7 @@ export function MainHeader({
         
         </div>
         <div className="flex items-center cursor-pointer" >
-          <Image src="/icons/Menu.png" alt="menu" width={35} height={35} />
+          <Image src="/icons/Menu.svg" alt="menu" width={35} height={35} />
         </div>
       </div>
 

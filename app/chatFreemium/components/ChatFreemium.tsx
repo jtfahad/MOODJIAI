@@ -11,10 +11,10 @@ import Image from 'next/image';
 const ChatFreemium: React.FC = () => {
   // Mock data for prompts - ideally this would come from a data source
   const suggestionData = [
-    { id: '1', iconSrc: "/icons/Cyclone.png", altText: "Emotional Alchemy", text: "Emotional Alchemy", onClick: () => console.log("Emotional Alchemy clicked") },
-    { id: '2', iconSrc: "/icons/Compass.png", altText: "Purpose and Direction", text: "Purpose and Direction", onClick: () => console.log("Purpose and Direction clicked") },
-    { id: '3', iconSrc: "/icons/MilkyWay.png", altText: "Creative Flow and Decisions", text: "Creative Flow and Decisions", onClick: () => console.log("Creative Flow and Decisions clicked") },
-    { id: '4', iconSrc: "/icons/Sparkles.png", altText: "Energetics and Resonance", text: "Energetics and Resonance", onClick: () => console.log("Energetics and Resonance clicked") },
+    { id: '1', iconSrc: "/icons/Cyclone.svg", altText: "Emotional Alchemy", text: "Emotional Alchemy", onClick: () => console.log("Emotional Alchemy clicked") },
+    { id: '2', iconSrc: "/icons/Compass.svg", altText: "Purpose and Direction", text: "Purpose and Direction", onClick: () => console.log("Purpose and Direction clicked") },
+    { id: '3', iconSrc: "/icons/MilkyWay.svg", altText: "Creative Flow and Decisions", text: "Creative Flow and Decisions", onClick: () => console.log("Creative Flow and Decisions clicked") },
+    { id: '4', iconSrc: "/icons/Sparkles.svg", altText: "Energetics and Resonance", text: "Energetics and Resonance", onClick: () => console.log("Energetics and Resonance clicked") },
   ];
 
   // Placeholder functions for event handlers

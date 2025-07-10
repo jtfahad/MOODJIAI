@@ -3,20 +3,31 @@ import React, { useRef, useEffect } from "react";
 import Image from "next/image";
 import { PopupPosition } from "@/types/sidebar";
 
+// Define a type for the sidebar item's category
+type SidebarCategory = 'favorites' | 'today' | 'yesterday' | 'previous';
+
 interface ChatPopupProps {
   isVisible: boolean;
   position: PopupPosition;
   chatId: string;
+  chatCategory: SidebarCategory;
   onRemove: (id: string) => void;
   onHide: (id: string) => void;
+  onAddToFavorites?: (id: string) => void;
+  onRemoveFromFavorites?: (id: string) => void;
+  onRename: (id: string) => void; // onRename is now REQUIRED
 }
 
 const ChatPopup: React.FC<ChatPopupProps> = ({
   isVisible,
   position,
   chatId,
+  chatCategory,
   onRemove,
-  onHide
+  onHide,
+  onAddToFavorites,
+  onRemoveFromFavorites,
+  onRename, // This will be used to signal the parent to start editing
 }) => {
   const popupRef = useRef<HTMLDivElement>(null);
 
@@ -39,45 +50,62 @@ const ChatPopup: React.FC<ChatPopupProps> = ({
 
   if (!isVisible) return null;
 
+  const isFavorite = chatCategory === 'favorites';
+  const favoritesOptionText = isFavorite ? "Drop from Favorites" : "Add to Favorites";
+  const favoritesOptionIcon = isFavorite ? "/icons/Favorite.svg" : "/icons/Favorite.svg";
+  const favoritesAction = isFavorite ? onRemoveFromFavorites : onAddToFavorites;
+
   return (
     <>
-      {/* Outer div for the gradient border effect and backdrop-filter */}
       <div
-        ref={popupRef} // Attach ref here
-        className="fixed z-50 p-[1px] rounded-[10px]" // p-[1px] creates the 1px border visually
+        ref={popupRef}
+        className="fixed z-50 p-[1px] rounded-[10px]"
         style={{
           top: position.top,
           left: position.left,
-          width: '180px', // Fixed width from Figma
-          height: '72px', // Fixed height from Figma
-          // The background of THIS div IS the gradient for the border.
+          width: '183px',
+          height: '112px',
           background: `linear-gradient(1.26deg, rgba(249, 188, 46, 0.2) 17.18%, rgba(226, 154, 30, 0.2) 25.06%, rgba(255, 205, 56, 0.2) 35.15%, #F0AF30 60.52%, #E29A1E 66.82%, #FFCD38 74.3%, #DD931A 76.65%)`,
-          // Apply backdrop-filter here. It affects content *behind* this div.
-          backdropFilter: 'blur(24px)', // Figma's blur value
-          // Important: We DON'T set a solid background color here,
-          // as it would cover the gradient. The inner div will have the solid background.
+          backdropFilter: 'blur(24px)',
         }}
       >
-        {/* Inner div for the actual content and main background color */}
         <div
-          className="w-full h-full rounded-[9px] flex flex-col justify-center items-center gap-[4px] bg-[#121212]" // bg-[#121212] is the solid background color
+          className="w-full h-full rounded-[9px] flex flex-col justify-center items-center gap-[6px] p-[8px] bg-black"
         >
+          {/* Favorites Option (Dynamic) */}
+          <button
+            onClick={() => {
+              if (favoritesAction) favoritesAction(chatId);
+              onHide(chatId); // Always hide popup after action
+            }}
+            className="w-full flex items-center gap-3 px-2 py-1 text-[14px] text-white hover:bg-white/10 transition-colors rounded-md justify-start whitespace-nowrap"
+          >
+            <Image src={favoritesOptionIcon} alt="favorites" width={16} height={16} />
+            {favoritesOptionText}
+          </button>
+
+          {/* Rename Option */}
+          <button
+            onClick={() => {
+              onRename(chatId); // Call onRename to start inline editing
+              onHide(chatId); // Hide the popup immediately
+            }}
+            className="w-full flex items-center gap-3 px-2 py-1 text-[14px] text-white hover:bg-white/10 transition-colors rounded-md justify-start"
+          >
+            <Image src="/icons/PenLine.svg" alt="rename" width={16} height={16} />
+            Rename
+          </button>
+
+          {/* Remove Option */}
           <button
             onClick={() => {
               onRemove(chatId);
-              onHide(chatId);
+              onHide(chatId); // Always hide popup after action
             }}
-            className="w-full flex items-center gap-3 px-2 py-1 text-[14px] text-red-400 hover:bg-red-500/10 transition-colors rounded-md justify-start"
+            className="w-full flex items-center gap-3 px-2 py-1 text-[14px] text-white hover:bg-red-500/10 transition-colors rounded-md justify-start"
           >
             <Image src="/icons/Bin.svg" alt="remove" width={16} height={16} />
-            Remove
-          </button>
-          <button
-            onClick={() => onHide(chatId)}
-            className="w-full flex items-center gap-3 px-2 py-1 text-[14px] text-white hover:bg-white/10 transition-colors rounded-md justify-start"
-          >
-            <Image src="/icons/HideEye.svg" alt="hide" width={16} height={16} />
-            Hide from sidebar
+            Delete
           </button>
         </div>
       </div>

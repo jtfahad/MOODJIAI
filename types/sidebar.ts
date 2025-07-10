@@ -2,6 +2,7 @@ export interface SidebarItem {
   id: string;
   title: string;
   color: string;
+  icon: string;
   hasMenu?: boolean;
 }
 

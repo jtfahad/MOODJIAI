@@ -17,11 +17,11 @@ interface PromptSuggestionsProps {
 
 const PromptSuggestions: React.FC<PromptSuggestionsProps> = ({ suggestions }) => {
   return (
-    <div className="flex items-center justify-center gap-3 text-center text-[14px] font-[400] leading-[100%] text-[#E6D4E3]">
+    <div className="flex items-center justify-center gap-3 text-center text-[14px] font-[400] leading-[110%] text-[#E6D4E3]">
       {suggestions.map(suggestion => (
         <div
           key={suggestion.id}
-          className="w-[222px] h-[88px] flex items-center gap-2 px-2 border-[1px] border-white/10 rounded-lg backdrop-blur-md bg-[#000000]/30 cursor-pointer"
+          className="w-[222px] h-[88px] flex items-center text-start gap-2 px-2 border-[1px] border-white/10 rounded-[20px] backdrop-blur-md bg-[#000000]/30 cursor-pointer hover:bg-[#C0C0C033]/20 hover:shadow-lg hover:shadow-[#00000040] hover:text-white transition-all duration-200"
           onClick={suggestion.onClick}
         >
           <Image src={suggestion.iconSrc} alt={suggestion.altText} width={40} height={40} />

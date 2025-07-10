@@ -1,7 +1,7 @@
 // components/ui/SidebarSection.tsx
 import React from "react";
-import SidebarItem from "./SidebarItem";
 import { SidebarItem as SidebarItemType, PopupPosition } from "@/types/sidebar";
+import SidebarItem from "./SidebarItem";
 
 interface SidebarSectionProps {
   title?: string;
@@ -11,8 +11,12 @@ interface SidebarSectionProps {
   maxVisibleItems?: number;
   onItemClick?: (id: string) => void;
   onSeeAllClick?: () => void;
-  onShowPopup?: (id: string, position: PopupPosition) => void;
+  // UPDATED: Now expects an event to get position for the popup
+  onShowPopup?: (event: React.MouseEvent, id: string, category: string) => void;
   onHidePopup?: () => void;
+  // NEW PROPS: For inline renaming functionality
+  editingChatId: string | null; // ID of the chat currently being edited
+  onRenameComplete: (id: string, newName: string) => void; // Callback for when rename is finished
 }
 
 const SidebarSection: React.FC<SidebarSectionProps> = ({
@@ -24,18 +28,21 @@ const SidebarSection: React.FC<SidebarSectionProps> = ({
   onItemClick,
   onSeeAllClick,
   onShowPopup,
-  onHidePopup
+  onHidePopup,
+  // NEW: Destructure the new props
+  editingChatId,
+  onRenameComplete,
 }) => {
   const visibleItems = showAll ? items : items.slice(0, maxVisibleItems);
   const totalItemsCount = items.length;
   const canToggleVisibility = totalItemsCount > maxVisibleItems;
+  const category = title ? title.toLowerCase() : 'default'; // Infer category from title
 
   return (
     <div className="mb-4">
-      {title !== 'Favourites' && (
+      {title !== 'Favorites' && (
         <div
-          // Added sticky positioning and z-index for the title
-          className="sticky top-0 z-10 flex gap-2 pl-5 pb-2 pt-3 text-[#FFCD38] text-[12px] leading-[160%] font-[500] backdrop-blur-sm"
+          className="sticky top-0 z-10 flex gap-2 pl-5 pb-2 pt-3 text-[#BCBCBC] text-[12px] leading-[160%] font-[500] backdrop-blur-sm"
         >
           {title}
         </div>
@@ -46,8 +53,12 @@ const SidebarSection: React.FC<SidebarSectionProps> = ({
             key={item.id}
             item={item}
             onItemClick={onItemClick}
-            onShowPopup={onShowPopup}
+            // UPDATED: Pass event, id, and category to onShowPopup
+            onShowPopup={(e) => onShowPopup && onShowPopup(e, item.id, category)}
             onHidePopup={onHidePopup}
+            // NEW: Pass editing state and rename complete handler to SidebarItem
+            isEditing={editingChatId === item.id}
+            onRenameComplete={onRenameComplete}
           />
         ))}
       </div>
