@@ -5,8 +5,8 @@ import { Search } from 'lucide-react';
 import { Sidebar } from './components/layout/sidebar';
 import { MainHeader } from './components/layout/main-header';
 import { MoodjiSteps } from './components/common/moodji-steps';
-import { MoodCategories } from './components/mood/mood-categories';
-import { MoodGrid } from './components/mood/mood-grid';
+import { MoodCategories } from './components/moods/mood-categories';
+import { MoodGrid } from './components/moods/mood-grid';
 
 // --- Mood Categories Data ---
 const moodCategories = [

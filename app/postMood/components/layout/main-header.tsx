@@ -60,7 +60,7 @@ export function MainHeader({
             </AvatarFallback>
           </Avatar>
             <span className="text-white text-[12px] font-400 pr-3">{userName}</span>
-          <Image src="/icons/Arrow.png" alt="Arrow" width={10} height={8} />
+          <Image src="/icons/ArrowDown.png" alt="Arrow" width={10} height={8} />
           </div>
           <div className='flex items-center gap-4 pl-2 '>
             <Star className="w-6 h-6 cursor-pointer" />
