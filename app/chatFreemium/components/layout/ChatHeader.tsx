@@ -1,7 +1,7 @@
 // components/layout/ChatHeader.tsx
 import React from 'react';
 import Image from 'next/image';
-import NewChatDropdown from '../ui/NewChatDropdown'; // We'll create this next
+import NewChatDropdown from '../ui/NewChatDropDown'; // We'll create this next
 
 interface ChatHeaderProps {
   onMenuClick?: () => void;
