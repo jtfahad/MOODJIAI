@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from 'react';
-import { Search } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import { Sidebar } from './components/layout/sidebar';
 import { MainHeader } from './components/layout/main-header';
 import { MoodjiSteps } from './components/common/moodji-steps';
@@ -50,8 +50,8 @@ const steps = [
   { id: 9, label: 'Affirmations', active: false },
   { id: 10, label: 'Additional notes', active: false },
 ];
-
 export default function PostMoodScreen() {
+  const router = useRouter();
   const [selectedCategory, setSelectedCategory] = useState<string>('positive');
   const [selectedMood, setSelectedMood] = useState<number | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
@@ -121,12 +121,14 @@ export default function PostMoodScreen() {
           <div className="relative z-10 flex flex-col"> {/* This div now holds all original content of the right panel */}
             <div className="flex-shrink-0"> {/* This div ensures the header doesn't shrink */}
               <MainHeader
+              userName="Nicole Lunan"
               title="Post Mood"
               subtitle="Limited Discount For Early Users"
               highlightedWord="Mood"
-              userName="Nariko"
-              onSkipClick={() => console.log('Skip clicked')}
-              onNextClick={() => console.log('Next clicked')}
+              onNextClick={() => {
+                router.push('/chatFreemium');
+                console.log('Next clicked');
+              }}
               onBackClick={() => console.log('Back clicked')}
               onStarClick={() => console.log('Star clicked')}
               onBookmarkClick={() => console.log('Bookmark clicked')}

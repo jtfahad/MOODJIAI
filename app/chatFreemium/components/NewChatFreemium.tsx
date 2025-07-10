@@ -1,6 +1,7 @@
 // components/NewChatFreemium.tsx
 'use client';
 import React from 'react';
+import { useRouter } from 'next/navigation';
 import Sidebar from './layout/sidebar';
 import ChatHeader from './layout/ChatHeader';
 import WelcomeSection from './chat/WelcomeSection';
@@ -8,6 +9,8 @@ import PromptSuggestions from './chat/PromptSuggestions';
 import ChatInput from './ui/ChatInput';
 
 const NewChatFreemium: React.FC = () => {
+    const router = useRouter();
+
   // Mock data for prompts - ideally this would come from a data source
   const suggestionData = [
     { id: '1', iconSrc: "/icons/Cyclone.svg", altText: "Emotional Alchemy", text: "Emotional Alchemy", onClick: () => console.log("Emotional Alchemy clicked") },
@@ -17,7 +20,10 @@ const NewChatFreemium: React.FC = () => {
   ];
 
   // Placeholder functions for event handlers
-  const handleMenuClick = () => console.log("Menu clicked");
+  const handleMenuClick= () => {
+    router.push('/postMood');
+    console.log('Next clicked');
+  };
   const handleNewChatClick = () => console.log("New Chat button clicked");
   const handleZenvarionClick = () => console.log("Zenvarion option clicked");
   const handleSendPrompt = (message: string) => console.log("Sending message:", message);
@@ -52,7 +58,7 @@ const NewChatFreemium: React.FC = () => {
         {/* Chat Header */}
         <ChatHeader
           onMenuClick={handleMenuClick}
-          // timeLeft="00:00:00" // You might pass actual time from state here
+          timeLeft=""
           onNewChatClick={handleNewChatClick}
         />
 
