@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import SidebarSection from "../ui/SidebarSection";
 import ProgressBar from "../ui/Progressbar";
@@ -255,7 +255,7 @@ const Sidebar: React.FC = () => {
     <div className="w-64 flex flex-col h-screen text-white relative">
       <div className="flex-shrink-0">
         <div className="flex p-6 pt-10 border-white/10">
-          <Image src="/logos/MainLogo.svg" alt="LOGO" width={120} height={40} />
+          <Image src="/logos/moodjiverse.svg" alt="LOGO" width={214} height={24} />
         </div>
         <div className="flex items-center gap-2 pl-5 pb-2 text-[14px] font-[500] leading-[17.52px] text-[#BCBCBC]">
           <Image src="/icons/Favorite.svg" alt="favourite" width={20} height={20} />
