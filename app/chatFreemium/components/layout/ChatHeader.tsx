@@ -26,7 +26,7 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({ onMenuClick, timeLeft, onNewCha
       )}
 
       {/* New Chat (right) */}
-      <div className="flex-shrink-0">
+      <div className="flex-shrink-0 fixed right-[34px] top-7 z-20">
         <NewChatDropdown onNewChatClick={onNewChatClick} />
       </div>
     </div>
