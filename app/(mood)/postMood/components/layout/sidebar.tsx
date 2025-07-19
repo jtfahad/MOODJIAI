@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import Image from 'next/image';
-import TokenSlider from '@/app/postMood/components/common/TokeSlider'; // Assuming this is your new interactive slider component
+import TokenSlider from '../common/TokeSlider';
 
 interface SidebarProps {
   profileName: string;
