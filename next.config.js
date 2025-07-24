@@ -7,7 +7,7 @@ const nextConfig = {
     return [
       {
         source: '/',
-        destination: '/chatFreemium',
+        destination: '/landing-page',
         permanent: true,
       },
     ];
