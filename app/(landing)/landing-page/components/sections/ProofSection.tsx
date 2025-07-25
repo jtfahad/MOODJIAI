@@ -3,6 +3,7 @@ import React from 'react';
 import Image from 'next/image';
 import { Button } from '../ui/Button';
 import { Tag } from '../ui/Tag';
+import { GradientButton } from '../ui/GradientButton';
 
 const ProofSection: React.FC = () => {
   const tags = [
@@ -88,9 +89,10 @@ const ProofSection: React.FC = () => {
         </div>
 
         <div className="flex justify-center lg:justify-start items-center mt-10 w-full">
-          <Button size="lg" className="w-full sm:w-auto">
+          {/* CTA Button */}
+          <GradientButton size="sm">
             Start My Scan
-          </Button>
+          </GradientButton>
         </div>
       </div>
     </div>

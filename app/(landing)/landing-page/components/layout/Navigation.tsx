@@ -1,67 +1,131 @@
-// components/layout/Navigation.tsx
+'use client';
+
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { Button } from '../ui/Button'; // Assuming Button component is still used elsewhere or for future
+import { useRouter } from 'next/navigation';
+import { NavigationButton } from '../ui/NavigationButton';
+import { AuthButton } from '../ui/AuthButton';
+import { MobileMenu } from '../ui/MobileMenu';
+import { useScrollDirection } from '@/hooks/useScrollDirection';
+import { NAVIGATION_ITEMS } from '@/constants/navigation';
 
 const Navigation: React.FC = () => {
-  const navItems = ['Home', 'About Us', 'The Creatrix', 'Pricing'];
-  const authButtons = ['Sign In', 'Sign Up'];
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { scrollDirection, isVisible } = useScrollDirection();
+  const router = useRouter();
 
-  // State to manage the active navigation item
-  const [activeNavItem, setActiveNavItem] = useState<number>(0); // 0 for Home
+  // Scroll to section or top
+  const scrollToSection = (hash: string) => {
+    const id = hash.replace('#', '');
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
 
-  // State to manage the active authentication button
-  const [activeAuthButton, setActiveAuthButton] = useState<number>(0); // 0 for Sign In
+  const handleNavClick = (href: string) => {
+    scrollToSection(href);
+  };
+
+  const handleAuthClick = (type: 'signin' | 'signup') => {
+    router.push(type === 'signin' ? '/login' : '/signup');
+  };
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen((prev) => !prev);
+  };
 
   return (
-    <nav className="flex w-full items-center justify-between h-[90px] pt-4 px-4 lg:px-10">
-      {/* Logo */}
-      <div className="flex">
-        <Image
-          src="/logos/moodjiverse.svg"
-          alt="Moodji Logo"
-          width={200}
-          height={19}
-          className="w-auto h-auto max-w-[150px] lg:max-w-[200px]"
-        //   style={{ filter: 'invert(0%) brightness(0%) contrast(100%)' }}
+    <>
+      <nav
+        className={`
+          fixed top-0 left-0 right-0 z-30
+          flex w-full items-center justify-between h-[90px] pt-4 px-4 lg:px-10
+          transition-all duration-300 ease-in-out
+          ${isVisible ? 'translate-y-0' : '-translate-y-full'}
+          ${scrollDirection === 'down' ? 'shadow-lg' : ''}
+        `}
+        role="navigation"
+        aria-label="Main navigation"
+      >
+        {/* Logo */}
+        <div className="flex items-center">
+          <a
+            href="#home"
+            className="focus:outline-none"
+            aria-label="Moodjiverse home"
+            onClick={(e) => {
+              e.preventDefault();
+              scrollToSection('#home');
+            }}
+          >
+            <Image
+              src="/logos/moodjiverse.svg"
+              alt="Moodjiverse"
+              width={200}
+              height={19}
+              className="w-auto h-auto max-w-[150px] lg:max-w-[200px]"
+              priority
+            />
+          </a>
+        </div>
 
+        {/* Desktop Navigation */}
+        <div className="hidden lg:flex w-[442px] h-[48px] items-center justify-center rounded-full border border-white/10 bg-white/10 backdrop-blur-md px-2 shadow-lg">
+          {NAVIGATION_ITEMS.map((item) => (
+            <NavigationButton
+              key={item.id}
+              isActive={false} // optionally set based on scroll position
+              onClick={() => handleNavClick(item.href)}
+              aria-label={`Navigate to ${item.label}`}
+            >
+              {item.label}
+            </NavigationButton>
+          ))}
+        </div>
+
+        {/* Desktop Auth Buttons */}
+        <div className="hidden lg:flex w-[222px] h-[48px] items-center justify-center rounded-full border border-white/10 bg-white/10 backdrop-blur-md shadow-lg">
+          <AuthButton
+            variant="primary"
+            isActive={false}
+            onClick={() => handleAuthClick('signin')}
+            aria-label="Sign in to your account"
+          >
+            Sign In
+          </AuthButton>
+          <AuthButton
+            variant="secondary"
+            isActive={false}
+            onClick={() => handleAuthClick('signup')}
+            aria-label="Create new account"
+          >
+            Sign Up
+          </AuthButton>
+        </div>
+
+        {/* Mobile Menu Toggle */}
+        <MobileMenu
+          isOpen={isMobileMenuOpen}
+          onToggle={toggleMobileMenu}
+          navigationItems={NAVIGATION_ITEMS}
+          activeNavItem=""
+          onNavClick={(id, href) => {
+            handleNavClick(href);
+            setIsMobileMenuOpen(false);
+          }}
+          onAuthClick={(action) => {
+            handleAuthClick(action);
+            setIsMobileMenuOpen(false);
+          }}
         />
-      </div>
+      </nav>
 
-      {/* Navigation Menu - Hidden on mobile */}
-      <div className="hidden lg:flex w-[442px] h-[48px] items-center justify-center rounded-full border border-[#FFFFFF1A] bg-[#FFFFFF1A] px-2">
-        {navItems.map((item, index) => (
-          <button
-            key={item}
-            className={`rounded-full w-[90%] h-[80%] text-sm font-normal leading-5 px-2 transition-colors ${
-              activeNavItem === index
-                ? 'bg-white text-black' // Active state: white background, black text
-                : 'text-black hover:bg-white hover:text-black' // Inactive state: black text, white bg on hover
-            }`}
-            onClick={() => setActiveNavItem(index)}
-          >
-            {item}
-          </button>
-        ))}
-      </div>
-
-      {/* Auth Buttons */}
-      <div className='flex w-[222px] h-[48px] items-center justify-center rounded-full border-[1px] border-[#FFFFFF1A] bg-[#FFFFFF1A]'>
-        {authButtons.map((item, index) => (
-          <button
-            key={item}
-            className={`rounded-full w-[95%] h-[80%] text-[14px] font-[400] leading-[20px] mx-2 transition-colors ${
-              activeAuthButton === index
-                ? 'bg-[#F95D2B] text-white' // Active state: orange background, white text
-                : 'text-black hover:bg-[#F95D2B] hover:text-white' // Inactive state: black text, orange bg on hover
-            }`}
-            onClick={() => setActiveAuthButton(index)}
-          >
-            {item}
-          </button>
-        ))}
-      </div>
-    </nav>
+      {/* Spacer for fixed nav */}
+      <div className="h-[90px]" aria-hidden="true" />
+    </>
   );
 };
 

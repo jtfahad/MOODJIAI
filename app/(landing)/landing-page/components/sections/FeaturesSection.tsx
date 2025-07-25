@@ -3,6 +3,7 @@ import React from 'react';
 import Image from 'next/image';
 import { Button } from '../ui/Button';
 import { FeatureCard } from '../ui/FeaturedCard';
+import { GradientButton } from '../ui/GradientButton';
 
 const FeaturesSection: React.FC = () => {
   const features = [
@@ -59,9 +60,10 @@ const FeaturesSection: React.FC = () => {
           </div>
           
           <div className="mt-10">
-            <Button size="lg" className="w-full sm:w-auto">
+            {/* CTA Button */}
+            <GradientButton size="sm">
               Start My Scan
-            </Button>
+            </GradientButton>
           </div>
         </div>
 
