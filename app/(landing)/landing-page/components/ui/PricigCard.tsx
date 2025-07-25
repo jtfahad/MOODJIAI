@@ -47,7 +47,7 @@ export const PricingCard: React.FC<PricingCardProps> = ({
       <div className="mb-8">
         <div className="w-12 h-12 rounded-full bg-white/50 border-[2.44px] border-white/20 flex items-center justify-center transition-all duration-300 hover:bg-white/70">
           <Image 
-            src="/icons/lightning.svg" 
+            src="/icons/Lightning.svg" 
             alt="Lightning icon" 
             width={16} 
             height={22}
