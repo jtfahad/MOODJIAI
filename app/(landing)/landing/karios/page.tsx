@@ -57,12 +57,12 @@ const LandingPage: React.FC = () => {
         <section id="creatrix">
           <ManifestationSection
             headingColor="#1088F8"
-            buttonBg="bg-gradient from-[#6395FF] to-[#4269F4]"
+            buttonBg="bg-gradient-to-r from-[#6395FF] to-[#4269F4]"
           />
           <ComparisonSection
             imagePath="/dragons/ComparisonChartKarios.svg"
             headingColor="#1088F8"
-            buttonBg="bg-gradient from-[#6395FF] to-[#4269F4]"
+            buttonBg="bg-gradient-to-r from-[#6395FF] to-[#4269F4]"
           />
         </section>
       </BackgroundSection>
@@ -73,7 +73,7 @@ const LandingPage: React.FC = () => {
         gradientTop={true}
       >
         <section id="pricing">
-          <PricingSection buttonBg="bg-gradient from-[#6395FF] to-[#4269F4]"/>
+          <PricingSection buttonBg="bg-gradient-to-r from-[#6395FF] to-[#4269F4]"/>
           <FaqSection
             imageSrc="/dragons/FAQ-karios.svg"
             headingColor="#1088F8"
