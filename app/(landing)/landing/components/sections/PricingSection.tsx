@@ -10,6 +10,7 @@ interface PricingSectionProps {
 }
 const PricingSection: React.FC<PricingSectionProps> = ({ buttonBg }) => {
   const { isYearly, toggleBilling } = useBillingToggle();
+  console.log('PricingSection rendered with isYearly:', isYearly, 'and buttonBg:', buttonBg);
 
   return (
     <section className="py-20 px-4 text-center" >

@@ -99,7 +99,7 @@ const ManifestationSection: React.FC<ManifestationSectionProps> = ({
 
         {/* CTA Button */}
         <div className="flex justify-center items-center mt-10 w-full p-2 ">
-          <GradientButton size="lg" className={buttonBg}>
+          <GradientButton size="lg" background={buttonBg}>
             Activate Selura
           </GradientButton>
         </div>

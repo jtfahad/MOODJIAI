@@ -13,7 +13,7 @@ interface PricingCardProps {
 export const PricingCard: React.FC<PricingCardProps> = ({ 
   plan, 
   isYearly = false, 
-  buttonBg = 'bg-gradient-to-r from-[#CD7D60] to-[#984A2E]' // Default gradient
+  buttonBg = ''
 }) => {
   const getBadgeStyles = (badge: string) => {
     switch (badge) {
@@ -105,7 +105,7 @@ export const PricingCard: React.FC<PricingCardProps> = ({
         
         {/* CTA Button */}
          <div className="flex justify-center items-center mt-10 w-full">
-          <GradientButton size="md" className={buttonBg}
+          <GradientButton size="md" background={buttonBg}
           aria-label={`Select ${plan.title} plan for ${getPrice()}`}>
             Claim Your Tier
           </GradientButton>

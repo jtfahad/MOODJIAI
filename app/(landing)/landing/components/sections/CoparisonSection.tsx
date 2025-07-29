@@ -53,7 +53,7 @@ const ComparisonSection: React.FC<ComparisonSectionProps> = ({
 
       {/* CTA Button */}
       <div className="flex justify-center items-center mt-10 w-full">
-        <GradientButton size="md" className={buttonBg}>
+        <GradientButton size="md" background={buttonBg}>
           Get Started
         </GradientButton>
       </div>
