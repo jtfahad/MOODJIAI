@@ -1,8 +1,6 @@
-'use client';
-
-import React, { useEffect, useRef } from 'react';
-import ChatMessage from '@/app/(chat)/chat/components/ui/ChatMessage';
-import TypingDots from '@/app/(chat)/chat/components/ui/TypingDots'; // Adjust path if needed
+// components/chat/ChatSection.tsx
+import React, { useRef, useEffect } from 'react';
+import ChatMessage from './ChatMessage';
 
 interface Message {
   id: string;
@@ -12,38 +10,24 @@ interface Message {
 
 interface ChatSectionProps {
   messages: Message[];
-  isThinking: boolean;
 }
 
-const ChatSection: React.FC<ChatSectionProps> = ({ messages, isThinking }) => {
+const ChatSection: React.FC<ChatSectionProps> = ({ messages }) => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
+  // Scroll to the latest message whenever messages change
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages, isThinking]);
+  }, [messages]);
 
   return (
-    <div className="w-full flex flex-col items-center px-4">
-      <div className="w-full max-w-[732px] flex flex-col gap-5 mb-20 overflow-x-hidden">
-        {messages.map((msg, idx) => (
-          <ChatMessage
-            key={msg.id}
-            type={msg.type}
-            message={msg.text}
-            isLastMessage={idx === messages.length - 1 && msg.type === 'ai' && !isThinking}
-          />
-        ))}
-
-        {isThinking && (
-          <div className="flex justify-start w-full">
-            <div className="max-w-[90%] md:max-w-[680px] rounded-[30px] border border-white/20">
-              <TypingDots />
-            </div>
-          </div>
-        )}
-
-        <div ref={messagesEndRef} />
-      </div>
+    // IMPORTANT CHANGE: Removed flex-1, overflow-y-auto, and p-4 from here.
+    // The parent (the fixed div) will now manage these properties.
+    <div className="w-full max-w-[732px] mx-auto flex flex-col mb-8 gap-y-5 scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-transparent">
+      {messages.map((msg) => (
+        <ChatMessage key={msg.id} type={msg.type} message={msg.text} />
+      ))}
+      <div ref={messagesEndRef} /> {/* Element to scroll into view */}
     </div>
   );
 };

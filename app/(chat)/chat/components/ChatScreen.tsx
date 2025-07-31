@@ -3,12 +3,9 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import Sidebar from '../../chat/components/layout/sidebar';
-import ChatHeader from '../../chatFreemium/components/layout/ChatHeader';
-import CenteredModal from '../../chatFreemium/components/ui/PromptSuggestionModal';
-import ChatInput from '../../chatFreemium/components/ui/ChatInput';
-import ChatSection from '../../chatFreemium/components/chat/ChatSection';
-import TypingDots from './ui/TypingDots';
+import Sidebar from './layout/sidebar';
+import ChatInput from './ui/ChatInput';
+import ChatSection from './chat/ChatSection';
 
 // Chat message type
 interface ChatMessage {
@@ -19,7 +16,6 @@ interface ChatMessage {
 
 const ChatScreen: React.FC = () => {
   const router = useRouter();
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
   const [chatStarted, setChatStarted] = useState(false);
   const [isThinking, setIsThinking] = useState(false);
@@ -30,8 +26,6 @@ const ChatScreen: React.FC = () => {
   const toggleSidebar = () => {
     setIsSidebarOpen(prev => !prev);
   };
-  const handleOpenModal = () => setIsModalOpen(true);
-  const handleCloseModal = () => setIsModalOpen(false);
 
   const handleSendPrompt = (message: string) => {
     if (!message.trim()) return;
@@ -57,11 +51,6 @@ const ChatScreen: React.FC = () => {
       setIsThinking(false);
       setChatMessages((prev) => [...prev, aiResponse]);
     }, 1500);
-  };
-
-  const handleMenuClick = () => {
-    router.push('/postMood');
-    console.log('Navigated to /postMood');
   };
 
   const handleNewChatClick = () => {
@@ -104,14 +93,6 @@ const ChatScreen: React.FC = () => {
 
       {/* Main Chat Area */}
       <div className="flex flex-col flex-1 m-4 rounded-2xl overflow-hidden min-h-0 relative">
-        {/* Header */}
-        <div className="px-4 pt-3 pb-2 flex-shrink-0">
-          <ChatHeader
-            onMenuClick={handleMenuClick}
-            timeLeft=""
-            onNewChatClick={handleNewChatClick}
-          />
-        </div>
 
         {/* 4. Menu button to re-open the sidebar */}
         {/* It only appears when the sidebar is closed */}
@@ -172,8 +153,6 @@ const ChatScreen: React.FC = () => {
           />
         </div>
 
-        {/* Prompt Modal */}
-        <CenteredModal isOpen={isModalOpen} onClose={handleCloseModal} />
       </div>
     </div>
   );

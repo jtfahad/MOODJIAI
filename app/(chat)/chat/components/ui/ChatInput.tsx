@@ -35,17 +35,17 @@ const ChatInput: React.FC<ChatInputProps> = ({
     <div className="w-full px-4 pb-6">
       {/* Main container for the input and the dragon image */}
       <div
-        className="w-[822px] h-[53px] rounded-[30px] p-[12px] max-w-[822px] mx-auto bg-black/70 backdrop-blur-lg relative" // Add 'relative' here
+        className="w-[822px] h-[53px] rounded-[30px] p-[12px] max-w-[822px] mx-auto bg-white/60 backdrop-blur-lg relative" // Add 'relative' here
       >
         <div className="flex items-center justify-between h-full">
           <div>
-            <Image className='cursor-pointer' src="/icons/Add.svg" alt="Add" width={18} height={18} onClick={onAddClick} />
+            <Image className='cursor-pointer text-[#000000]' src="/icons/Add.svg" alt="Add" width={18} height={18} onClick={onAddClick} />
           </div>
           <div className="flex-1 h-full items-center relative pl-5">
             <input
               type="text"
               placeholder={placeholder}
-              className="w-full h-full bg-transparent text-white/80 placeholder:text-white/30 outline-none placeholder:text-[12.41px] font-[400] leading-[17.52px] pb-1"
+              className="w-full h-full bg-transparent text-black placeholder:text-black outline-none placeholder:text-[14px] font-[400] leading-[17.52px] pb-1"
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               onKeyPress={handleKeyPress}
@@ -59,7 +59,7 @@ const ChatInput: React.FC<ChatInputProps> = ({
 
         {/* Dragon Image - Positioned Absolutely within this ChatInput component */}
         <Image
-          src="/dragons/Nariko.svg" // **Ensure this path is correct**
+          src="/dragons/ChatLumeria.svg" // **Ensure this path is correct**
           alt="Dragon decoration"
           width={148}
           height={148}
