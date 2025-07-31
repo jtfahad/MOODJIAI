@@ -16,7 +16,7 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({ onMenuClick, timeLeft, onNewCha
     <div className="w-full flex justify-between px-4 pt-3 items-start">
       {/* Menu (left) */}
       <div className="flex-shrink-0 ">
-        <Image className='cursor-pointer fixed md:left-[290px] left-[34px] top-7 z-20' src="/icons/Menu.svg" alt="Menu" width={40} height={40} onClick={onMenuClick} />
+        {/* <Image className='cursor-pointer fixed md:left-[290px] left-[34px] top-7 z-20' src="/icons/Menu.svg" alt="Menu" width={40} height={40} onClick={onMenuClick} /> */}
       </div>
       { timeLeft && ( 
        <div className="flex items-center gap-2">
@@ -27,7 +27,7 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({ onMenuClick, timeLeft, onNewCha
 
       {/* New Chat (right) */}
       <div className="flex-shrink-0 fixed right-[34px] top-7 z-20">
-        <NewChatDropdown onNewChatClick={onNewChatClick} />
+        {/* <NewChatDropdown onNewChatClick={onNewChatClick} /> */}
       </div>
     </div>
   );

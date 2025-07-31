@@ -69,7 +69,7 @@ const TokenSlider: React.FC<TokenSliderProps> = ({
         <div
           className="absolute top-1/2 -translate-y-1/2 transform bg-[#F95D2B] text-white/80 text-xs font-semibold rounded-full shadow-md z-10
                      w-8 h-4 flex items-center justify-center cursor-pointer select-none"
-          style={{ left: `calc(${progressPercentage}% - 24px)` }}
+          style={{ left: `calc(${progressPercentage}% - 15px)` }}
         >
           {currentTokenCount}
         </div>

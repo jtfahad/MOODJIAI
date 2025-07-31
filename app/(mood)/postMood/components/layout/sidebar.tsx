@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import Image from 'next/image';
-import TokenSlider from '../common/TokeSlider';
+import TokenSlider from '@/app/(chat)/chat/components/ui/TokeSlider';
 
 interface SidebarProps {
   profileName: string;
@@ -53,13 +53,12 @@ export function Sidebar({
           <div className="flex items-center gap-3 mb-4">
             {/* Profile Avatar with Online Badge */}
             <div className="relative">
-              <Avatar className="w-10 h-10">
+              {/* <Avatar className="w-10 h-10">
                 <AvatarImage src={profileAvatar} alt={profileName} />
                 <AvatarFallback className="bg-gray-600 text-white">
                   <Image src="/icons/ProfileImage.png" alt="menu" width={35} height={35} />
-                  {/* If profileAvatar is not provided, this fallback will show the placeholder image */}
                 </AvatarFallback>
-              </Avatar>
+              </Avatar> */}
               {/* Online Badge */}
               <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-[#1C0841]"></div>
             </div>
