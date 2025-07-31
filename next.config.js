@@ -7,7 +7,7 @@ const nextConfig = {
     return [
       {
         source: '/',
-        destination: '/landing/selura',
+        destination: '/chat',
         permanent: true,
       },
     ];
