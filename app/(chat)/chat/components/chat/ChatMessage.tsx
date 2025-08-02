@@ -1,47 +1,97 @@
 // components/chat/ChatMessage.tsx
-import React from 'react';
-import Image from 'next/image';
+'use client';
+
+import React, { useEffect, useState, useRef } from 'react';
+import ActionButtons from '../ui/ActionButtons'; // Assuming this path is correct
+import MarkdownParser from '@/utils/markdownParser'; // New import for markdown parsing
 
 interface ChatMessageProps {
   type: 'user' | 'ai';
   message: string;
+  isLastAiMessageAndNotThinking: boolean;
 }
 
-const ChatMessage: React.FC<ChatMessageProps> = ({ type, message }) => {
-  const borderGradient = `linear-gradient(273.92deg, rgba(249, 188, 46, 0.2) -0.4%, rgba(226, 154, 30, 0.2) 12.89%, rgba(255, 205, 56, 0.2) 29.94%, #F0AF30 72.76%, #E29A1E 83.4%, #FFCD38 96.03%, #DD931A 100%)`;
+const ChatMessage: React.FC<ChatMessageProps> = ({
+  type,
+  message,
+  isLastAiMessageAndNotThinking,
+}) => {
+  const isUser = type === 'user';
+  const [displayedText, setDisplayedText] = useState(isUser ? message : '');
+  const [showActions, setShowActions] = useState(false);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    if (isUser) {
+      setDisplayedText(message);
+      setShowActions(false);
+      return;
+    }
+
+    // For AI messages:
+    if (isLastAiMessageAndNotThinking) {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+
+      setDisplayedText(''); // Reset for typing animation
+      setShowActions(false); // Hide actions until typing is done
+
+      let i = 0;
+      intervalRef.current = setInterval(() => {
+        setDisplayedText((prev) => prev + message[i]);
+        i++;
+        if (i >= message.length) {
+          clearInterval(intervalRef.current!);
+          intervalRef.current = null;
+          setTimeout(() => setShowActions(true), 300);
+        }
+      }, 15); // Adjust typing speed here
+
+    } else {
+      // For older AI messages, show immediately without animation, and actions are visible
+      setDisplayedText(message);
+      setShowActions(true);
+    }
+
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
+  }, [message, isUser, isLastAiMessageAndNotThinking]);
+
+  const bubbleStyle = {
+    background: isUser
+      ? 'linear-gradient(to right, rgba(255,255,255,0.15), rgba(255,255,255,0.1))'
+      : '',
+    border: isUser
+      ? '1px solid rgba(255, 255, 255, 0.25)'
+      : '',
+    backdropFilter: isUser ? 'blur(24px)' : '',
+    WebkitBackdropFilter: isUser ? 'blur(24px)' : '',
+  };
+
+  const showTypingCursor = isLastAiMessageAndNotThinking && displayedText.length < message.length;
 
   return (
-    // Outer wrapper for alignment (user messages right, AI messages left)
-    <div className={`flex w-full ${type === 'user' ? 'justify-end' : 'justify-start'}`}>
-      {/* Inner wrapper for the gradient border effect */}
+    <div className={`flex w-full ${isUser ? 'justify-end' : 'justify-start'}`}>
       <div
-        className={`relative overflow-hidden p-[2px] rounded-[40px] shadow-lg`}
-        style={{
-          // background: borderGradient,
-          // boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.25)',
-          // Responsive width using min() for max width and responsive percentage
-          width: type === 'user' ? 'min(490px, 90%)' : 'min(732px, 95%)',
-          minHeight: type === 'user' ? '77px' : 'auto', // User message has fixed height
-          maxHeight: type === 'ai' ? '403px' : 'auto', // Max height for AI message, will scroll internally if content overflows
-        }}
+        className={`max-w-[90%] md:max-w-[680px] rounded-[30px] px-6 py-2 ${isUser ? 'shadow-xl' : ''} text-white`}
+        style={bubbleStyle}
       >
-        {/* Actual content container */}
-        <div
-          className={`w-full h-full flex flex-col justify-center items-start rounded-[38px] p-4 text-white backdrop-blur-lg`}
-          style={{
-            // background: type === 'user' ? '#FFFFFF99' : '#08101599', // Semi-transparent white for user, dark for AI
-            // WebkitBackdropFilter: 'blur(24px)', // Safari compatibility for backdrop filter
-            // color: type === 'user' ? '#333' : '#fff', // Text color for user message
-            padding: type === 'ai' ? '40px' : '16px', // Specific padding for AI messages
-            gap: type === 'ai' ? '10px' : '0px', // Specific gap for AI content
-          }}
-        >
-          {/* You can add an icon for AI messages here if desired */}
-          {/* {type === 'ai' && (
-            <Image src="/icons/GeminiIcon.svg" alt="AI" width={32} height={32} className="mb-2" />
-          )} */}
-          <p className="whitespace-pre-wrap">{message}</p> {/* Preserves newlines and spaces */}
-        </div>
+        <p className="whitespace-pre-wrap text-base leading-relaxed">
+          {/* Render markdown content here */}
+          <MarkdownParser content={displayedText} />
+          {showTypingCursor && (
+            <span className="animate-pulse">|</span>
+          )}
+        </p>
+        {!isUser && showActions && (
+          <div className="mt-2">
+            <ActionButtons />
+          </div>
+        )}
       </div>
     </div>
   );

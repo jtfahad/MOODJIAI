@@ -59,8 +59,9 @@ const TOKENS = { current: 1, max: 3 };
 // 1. Define the props for the Sidebar, including the new 'onClose' function
 type SidebarProps = {
   onClose: () => void;
+  onNewChat: () => void;
 };
-const Sidebar: React.FC<SidebarProps> = ({ onClose }) => {
+const Sidebar: React.FC<SidebarProps> = ({ onClose ,onNewChat}) => {
   const [selectedItem, setSelectedItem] = useState<string | null>(null);
   const [showAllFavorites, setShowAllFavorites] = useState(false);
   // Removed showAllToday and showAllYesterday states, as they are no longer needed for toggling
@@ -257,6 +258,10 @@ const Sidebar: React.FC<SidebarProps> = ({ onClose }) => {
   const handleUpgradeClick = () => {
     console.log("Sidebar: Upgrade clicked");
   };
+  const handleNewChatClick = () => {
+    console.log("Sidebar: New chat clicked");
+    onNewChat(); // Call the onNewChat function passed from ChatScreen
+  };
 
   return (
     // 2. The sidebar now fills its parent container and hides overflowing content during animation.
@@ -281,7 +286,8 @@ const Sidebar: React.FC<SidebarProps> = ({ onClose }) => {
           <Image src="/icons/CommentIcon.svg" alt="Dashboard" width={24} height={24} />
           Dashboard
         </div>
-        <div className="w-full h-[52px] flex items-center gap-2 pl-5 pb-2 text-[14px] font-[500] leading-[17.52px] text-[#FFFFFF] hover:bg-[#FFFFFF] hover:bg-opacity-10 cursor-pointer">
+        <div className="w-full h-[52px] flex items-center gap-2 pl-5 pb-2 text-[14px] font-[500] leading-[17.52px] text-[#FFFFFF] hover:bg-[#FFFFFF] hover:bg-opacity-10 cursor-pointer"
+          onClick={handleNewChatClick}>
           <Image src="/icons/DashboardSquare.svg" alt="AskMoodJi" width={24} height={24} />
           ASK Moodji
         </div>

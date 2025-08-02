@@ -1,76 +1,135 @@
-// components/ui/ChatInput.tsx
-import React from 'react';
+'use client';
+
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
+import { Send, Paperclip, Mic } from 'lucide-react';
 import Image from 'next/image';
 
 interface ChatInputProps {
+  onSend: (message: string) => void;
+  onAddClick: () => void;
+  onRecordClick: () => void;
   placeholder?: string;
-  onSend?: (message: string) => void;
-  onAddClick?: () => void;
-  onRecordClick?: () => void;
-  // You might add value and onChange props for controlled input
 }
 
 const ChatInput: React.FC<ChatInputProps> = ({
-  placeholder = "Ask anything",
   onSend,
   onAddClick,
   onRecordClick,
+  placeholder = "Share your thoughts with Moodji...",
 }) => {
-  const [inputValue, setInputValue] = React.useState(''); // State for the input field
+  const [message, setMessage] = useState('');
 
-  const handleSendClick = () => {
-    if (inputValue.trim() && onSend) {
-      onSend(inputValue.trim());
-      setInputValue(''); // Clear input after sending
+  const handleSend = () => {
+    if (message.trim()) {
+      onSend(message.trim());
+      setMessage('');
     }
   };
 
-  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter') {
-      handleSendClick();
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    handleSend();
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault(); // prevent newline
+      handleSend();
     }
   };
 
   return (
-    <div className="w-full px-4 pb-6">
-      {/* Main container for the input and the dragon image */}
-      <div
-        className="w-[822px] h-[53px] rounded-[30px] p-[12px] max-w-[822px] mx-auto bg-white/60 backdrop-blur-lg relative" // Add 'relative' here
-      >
-        <div className="flex items-center justify-between h-full">
-          <div>
-            <Image className='cursor-pointer text-[#000000]' src="/icons/Add.svg" alt="Add" width={18} height={18} onClick={onAddClick} />
-          </div>
-          <div className="flex-1 h-full items-center relative pl-5">
-            <input
-              type="text"
+    <motion.form
+      onSubmit={handleSubmit}
+      className="w-full px-4 relative z-10"
+      whileHover={{ scale: 1.01 }}
+      transition={{ duration: 0.2 }}
+    >
+      <div className="relative max-w-[822px] mx-auto rounded-[30px] bg-white/10 backdrop-blur-xl border border-white/20 shadow-xl overflow-visible">
+        {/* Animated Border Effect */}
+        <motion.div
+          className="absolute inset-0 rounded-[30px] pointer-events-none z-0"
+          animate={{
+            background: [
+              'linear-gradient(0deg, rgba(147, 197, 253, 0.12) 0%, transparent 100%)',
+              'linear-gradient(90deg, rgba(147, 197, 253, 0.12) 0%, transparent 100%)',
+              'linear-gradient(180deg, rgba(147, 197, 253, 0.12) 0%, transparent 100%)',
+              'linear-gradient(270deg, rgba(147, 197, 253, 0.12) 0%, transparent 100%)',
+              'linear-gradient(360deg, rgba(147, 197, 253, 0.12) 0%, transparent 100%)',
+            ],
+          }}
+          transition={{ duration: 5, repeat: Infinity, ease: 'linear' }}
+        />
+
+        <div className="relative z-10 flex items-end gap-3 px-5 py-3">
+          {/* Add Button */}
+          <motion.button
+            type="button"
+            onClick={onAddClick}
+            className="p-2 rounded-lg bg-white/10 text-white hover:bg-white/20 transition-colors"
+            whileHover={{ scale: 1.1, rotate: 10 }}
+            whileTap={{ scale: 0.9 }}
+          >
+            <Paperclip size={20} />
+          </motion.button>
+
+          {/* Message Input */}
+          <div className="flex-1 relative">
+            <textarea
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              onKeyDown={handleKeyDown}
               placeholder={placeholder}
-              className="w-full h-full bg-transparent text-black placeholder:text-black outline-none placeholder:text-[14px] font-[400] leading-[17.52px] pb-1"
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-              onKeyPress={handleKeyPress}
+              className="w-full bg-transparent text-white placeholder-white/50 resize-none outline-none max-h-32 min-h-[50px] leading-relaxed"
+              rows={1}
+              style={{
+                height: 'auto',
+                minHeight: '50px',
+                maxHeight: '128px',
+              }}
+              onInput={(e) => {
+                const target = e.target as HTMLTextAreaElement;
+                target.style.height = 'auto';
+                target.style.height = target.scrollHeight + 'px';
+              }}
             />
           </div>
-          <div className="flex items-center justify-end gap-4">
-            <Image className='cursor-pointer' src="/icons/Recording.svg" alt="Mic" width={18} height={18} onClick={onRecordClick} />
-            <Image className='cursor-pointer' src="/icons/Send.svg" alt="Send" width={24} height={24} onClick={handleSendClick} />
-          </div>
+
+          {/* Record Button */}
+          <motion.button
+            type="button"
+            onClick={onRecordClick}
+            className="p-2 rounded-lg bg-white/10 text-white hover:bg-white/20 transition-colors"
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+          >
+            <Mic size={20} />
+          </motion.button>
+
+          {/* Send Button */}
+          <motion.button
+            type="submit"
+            disabled={!message.trim()}
+            className="p-2 rounded-lg bg-gradient-to-r from-blue-500 to-purple-500 text-white disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+            whileHover={message.trim() ? { scale: 1.1 } : {}}
+            whileTap={message.trim() ? { scale: 0.9 } : {}}
+          >
+            <Send size={20} />
+          </motion.button>
         </div>
 
-        {/* Dragon Image - Positioned Absolutely within this ChatInput component */}
+        {/* Floating Dragon */}
         <Image
-          src="/dragons/ChatLumeria.svg" // **Ensure this path is correct**
-          alt="Dragon decoration"
+          src="/dragons/ChatLumeria.svg"
+          alt="Dragon"
           width={148}
           height={148}
-          className="absolute z-20" // z-index to ensure it's on top
-          style={{
-            right: 'calc(2px)', 
-            bottom: 'calc(40px)', 
-          }}
+          className="absolute z-30 pointer-events-none"
+          style={{ top: '-120px', right: '0px' }}
         />
       </div>
-    </div>
+    </motion.form>
   );
 };
 
