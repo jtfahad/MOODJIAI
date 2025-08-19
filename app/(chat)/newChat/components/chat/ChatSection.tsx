@@ -2,8 +2,8 @@
 'use client';
 
 import React, { useEffect, useRef } from 'react';
-import ChatMessage from '../chat/ChatMessage';
-import TypingDots from '@/app/(chat)/chat/components/ui/TypingDots'; // Adjust path if needed
+import ChatMessage from './ChatMessage';
+import TypingDots from '@/app/(chat)/newChat/components/ui/TypingDots'; // Adjust path if needed
 import MarkdownParser from '@/utils/markdownParser'; // Assuming this path is correct
 
 interface Message {

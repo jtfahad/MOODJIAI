@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import Image from 'next/image';
-import TokenSlider from '@/app/(chat)/chat/components/ui/TokeSlider';
+import TokenSlider from '@/app/(chat)/newChat/components/ui/TokeSlider';
 
 interface SidebarProps {
   profileName: string;
