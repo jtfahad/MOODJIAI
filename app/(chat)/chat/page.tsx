@@ -6,28 +6,28 @@ import { Paperclip } from "lucide-react";
 // Background combinations
 const backgrounds = [
   {
-    mobile: "/backgroundImages/chatMobileBg.png",
-    desktop: "/moodBackgrounds/Spiritual-Psychic-lg.png",
+    mobile: "/moodBackgrounds/sm/SpiritualPsychic.png",
+    desktop: "/moodBackgrounds/lg/SpiritualPsychic.png",
   },
   {
-    mobile: "/backgroundImages/chatMobileBg2.png",
-    desktop: "/moodBackgrounds/Calm-Recharged-lg.png",
+    mobile: "/moodBackgrounds/sm/CalmRecharged.png",
+    desktop: "/moodBackgrounds/lg/CalmRecharged.png",
   },
   {
-    mobile: "/backgroundImages/chatMobileBg3.png",
-    desktop: "/moodBackgrounds/Angry-Jealous-lg.png",
+    mobile: "/moodBackgrounds/sm/AngryJealous.png",
+    desktop: "/moodBackgrounds/lg/AngryJealous.png",
   },
-    {
-    mobile: "/backgroundImages/chatMobileBg4.png",
-    desktop: "/moodBackgrounds/Anxious-Fearful-lg.png",
+  {
+    mobile: "/moodBackgrounds/sm/AnxiousFearful.png",
+    desktop: "/moodBackgrounds/lg/AnxiousFearful.png",
   },
-    {
-    mobile: "/backgroundImages/chatMobileBg5.png",
-    desktop: "/moodBackgrounds/Abundant-Manifesting-lg.png",
+  {
+    mobile: "/moodBackgrounds/sm/AbundantManifesting.png",
+    desktop: "/moodBackgrounds/lg/AbundantManifesting.png",
   },
-    {
-    mobile: "/backgroundImages/chatMobileBg6.png",
-    desktop: "/moodBackgrounds/Adorable-Sassy-lg.png",
+  {
+    mobile: "/moodBackgrounds/sm/AdorableSassy.png",
+    desktop: "/moodBackgrounds/lg/AdorableSassy.png",
   },
   // ➕ add as many as you need
 ]
