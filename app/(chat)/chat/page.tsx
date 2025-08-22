@@ -7,27 +7,27 @@ import { Paperclip } from "lucide-react";
 const backgrounds = [
   {
     mobile: "/backgroundImages/chatMobileBg.png",
-    desktop: "/backgroundImages/chatScreenBg.png",
+    desktop: "/moodBackgrounds/Spiritual-Psychic-lg.png",
   },
   {
     mobile: "/backgroundImages/chatMobileBg2.png",
-    desktop: "/backgroundImages/chatScreenBg2.png",
+    desktop: "/moodBackgrounds/Calm-Recharged-lg.png",
   },
   {
     mobile: "/backgroundImages/chatMobileBg3.png",
-    desktop: "/backgroundImages/chatScreenBg3.png",
+    desktop: "/moodBackgrounds/Angry-Jealous-lg.png",
   },
     {
     mobile: "/backgroundImages/chatMobileBg4.png",
-    desktop: "/backgroundImages/chatScreenBg4.png",
+    desktop: "/moodBackgrounds/Anxious-Fearful-lg.png",
   },
     {
     mobile: "/backgroundImages/chatMobileBg5.png",
-    desktop: "/backgroundImages/chatScreenBg5.png",
+    desktop: "/moodBackgrounds/Abundant-Manifesting-lg.png",
   },
     {
     mobile: "/backgroundImages/chatMobileBg6.png",
-    desktop: "/backgroundImages/chatScreenBg6.png",
+    desktop: "/moodBackgrounds/Adorable-Sassy-lg.png",
   },
   // ➕ add as many as you need
 ]
