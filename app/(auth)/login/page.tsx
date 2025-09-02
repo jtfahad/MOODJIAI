@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -59,10 +61,10 @@ export default function LoginPage() {
 
   return (
     <div
-      className="min-h-screen flex items-center justify-center p-4 bg-no-repeat bg-cover bg-center"
-      style={{ backgroundImage: 'url("/background/login.png")', backgroundColor: '#F8F9FA' }}
+      className="min-h-screen flex items-center justify-center p-4 bg-no-repeat bg-cover bg-center border-[6px] border-[#D6CDF5]"
+      style={{ backgroundImage: 'url("/backgroundImages/login.png")', backgroundColor: '#F8F9FA' }}
     >
-      <div className="hidden md:flex absolute inset-0 bg-white opacity-40"></div>
+      <div className="hidden md:flex absolute inset-0 opacity-40"></div>
 
       <div className="flex flex-col items-center z-10 w-full px-4 sm:px-6 md:px-8">
         {/* Logo at the top center */}
@@ -185,12 +187,16 @@ export default function LoginPage() {
               &copy; {new Date().getFullYear()} Moodji . All rights reserved.
             </div>
             <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 text-[#111827] leading-[160%] font-[500]">
-              <span className="hover:underline cursor-pointer">Terms & Conditions</span>
-              <span className="hover:underline cursor-pointer">Privacy Policy</span>
+              <Link href="/terms-of-use" passHref>
+                <span className="hover:underline cursor-pointer">Terms & Conditions</span>
+              </Link>
+              <Link href="#privacy-policy" passHref>
+                <span className="hover:underline cursor-pointer">Privacy Policy</span>
+              </Link>
             </div>
           </div>
         </div>
       </div>
     </div>
   );
-}
+} 

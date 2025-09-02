@@ -1,12 +1,13 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link'; // Import the Link component
 
 export default function TermsOfUse() {
   return (
     <div
-      className="min-h-screen flex items-center justify-center p-4 bg-no-repeat bg-cover bg-center"
-      style={{ backgroundImage: 'url("/background/login.png")', backgroundColor: '#F8F9FA' }}
+      className="min-h-screen flex items-center justify-center p-4 bg-no-repeat bg-cover bg-center border-[6px] border-[#D6CDF5]"
+      style={{ backgroundImage: 'url("/backgroundImages/login.png")', backgroundColor: '#F8F9FA' }}
     >
       <div className="hidden md:flex absolute inset-0 bg-white opacity-40"></div>
 
@@ -24,13 +25,13 @@ export default function TermsOfUse() {
         </div>
 
         {/* Content Card */}
-        <div className="w-full max-w-[676px] h-auto max-h-[80vh] bg-white p-8 rounded-xl shadow-lg border border-gray-200 flex flex-col overflow-y-auto custom-scrollbar">
+        <div className="w-full sm:w-auto min-w-0 md:min-w-[1000px] bg-white p-8 rounded-xl shadow-lg border border-gray-200 flex flex-col overflow-y-auto sm:overflow-hidden sm:h-auto">
           <div className="flex justify-center mb-6">
             <h1 className="text-3xl font-bold text-gray-800">Terms of Use</h1>
           </div>
 
           <div className="text-gray-700 leading-relaxed mb-8">
-            <h2 className="text-xl font-semibold text-gray-800 mb-2">1. Who we are</h2>
+            <h2 className="text-xl font-semibold text-gray-800 mb-2">1. Who we</h2>
             <p className="mb-4">Our website address is: <a href="https://moodme.co" className="text-yellow-500 hover:underline">https://moodme.co</a>.</p>
 
             <h2 className="text-xl font-semibold text-gray-800 mb-2">2. Comments</h2>
@@ -69,7 +70,10 @@ export default function TermsOfUse() {
               &copy; {new Date().getFullYear()} Moodji . All rights reserved.
             </div>
             <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 text-[#111827] leading-[160%] font-[500]">
-              <span className="hover:underline cursor-pointer">Terms & Conditions</span>
+              {/* Use the Link component for internal navigation */}
+              <Link href="/terms-of-use" passHref>
+                <span className="hover:underline cursor-pointer">Terms & Conditions</span>
+              </Link>
               <span className="hover:underline cursor-pointer">Privacy Policy</span>
             </div>
           </div>
