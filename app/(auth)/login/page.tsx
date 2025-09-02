@@ -11,13 +11,14 @@ export default function LoginPage() {
   const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
 
   const router = useRouter();
-        
+
   const handleSignUp = () => {
-      router.push('/signup'); // Adjust the path as needed
+    router.push('/signup');
   };
+
   const validateForm = () => {
     const newErrors: { email?: string; password?: string } = {};
-     
+
     if (!email) {
       newErrors.email = 'Email is required.';
     } else if (!/^\S+@\S+\.\S+$/.test(email)) {
@@ -33,19 +34,18 @@ export default function LoginPage() {
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
+
   const handleForgotPassword = () => {
-    router.push('/forgot-password'); // Adjust the path as needed
+    router.push('/forgot-password');
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (validateForm()) {
       console.log('Form Submitted:', { email, password });
-      //clear form
       setEmail('');
       setPassword('');
       setErrors({});
-      // Proceed with login
     }
   };
 
@@ -58,23 +58,31 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col md:flex-row bg-[#FFFFFF]">
-      <div className="relative w-1/2 flex items-center justify-center">
-        <Image
-          src="/backgroundImages/login-left-logo.svg"
-          alt="Fantasy Dragon"
-          className="w-full h-full object-contain rounded-3xl p-4"
-          fill
-        />
-      </div>
+    <div
+      className="min-h-screen flex items-center justify-center p-4 bg-no-repeat bg-cover bg-center"
+      style={{ backgroundImage: 'url("/background/login.png")', backgroundColor: '#F8F9FA' }}
+    >
+      <div className="hidden md:flex absolute inset-0 bg-white opacity-40"></div>
 
-      <div className="h-screen flex flex-1 items-center justify-center">
-        <form onSubmit={handleSubmit} className="flex justify-between flex-col h-[80%] w-[70%]">
-          <div className="flex justify-center">
-            <p className="text-[24px] md:text-3xl font-[700] text-gray-800 leading-[130%]">Sign in</p>
-          </div>
+      <div className="flex flex-col items-center z-10 w-full px-4 sm:px-6 md:px-8">
+        {/* Logo at the top center */}
+        <div className="flex flex-col items-center mb-8">
+          <Image
+            src="/logos/moodjiverse.svg"
+            alt="Moodjiverse Logo"
+            width={226}
+            height={26}
+            className="mb-6"
+            style={{ filter: 'invert(0%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(0%) contrast(100%)' }}
+          />
+        </div>
 
-          <div className="flex flex-col gap-6 mb-6">
+        <div className="w-full max-w-[676px] h-auto max-h-[681px] bg-white p-8 rounded-xl shadow-lg border border-gray-200">
+          <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+            <div className="flex justify-center mb-6">
+              <p className="text-3xl font-bold text-gray-800">Sign in</p>
+            </div>
+
             {/* Email Input */}
             <div className="flex flex-col">
               <label htmlFor="email" className="text-sm font-medium text-gray-700 mb-2">
@@ -110,30 +118,30 @@ export default function LoginPage() {
                 width={20}
                 height={20}
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-4 top-[66%] translate-y-[-50%] cursor-pointer"
+                className="absolute right-4 top-1/2 mt-4 translate-y-[-50%] cursor-pointer"
               />
               {errors.password && <span className="text-red-500 text-sm mt-1">{errors.password}</span>}
             </div>
 
             {/* Remember + Forgot */}
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between mt-2">
               <div className="flex items-center gap-2">
                 <input type="checkbox" id="remember" className="h-4 w-4 accent-black text-gray-600 focus:ring-gray-500 border-gray-100 rounded" />
-                <label htmlFor="remember" className="text-[14px] font-[400] text-[#687588]">Remember me</label>
+                <label htmlFor="remember" className="text-sm font-normal text-gray-600">Remember me</label>
               </div>
-              <span className="text-[14px] text-[#687588] hover:underline leading-[160%] cursor-pointer" onClick={handleForgotPassword}>Forgot Password?</span>
+              <span className="text-sm text-gray-600 hover:underline cursor-pointer" onClick={handleForgotPassword}>Forgot Password?</span>
             </div>
 
             {/* Submit */}
             <button
               type="submit"
-              className="w-full bg-[#111827] text-white p-3 rounded-lg font-semibold text-lg shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-all duration-200 transform hover:-translate-y-0.5"
+              className="w-full bg-[#111827] text-white p-3 rounded-lg font-semibold text-lg shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-all duration-200 transform hover:-translate-y-0.5 mt-4"
             >
               Login
             </button>
 
             {/* Signup CTA */}
-            <div className="text-start text-sm text-gray-600">
+            <div className="text-center text-sm text-gray-600 mt-4">
               Don&apos;t have an account?{' '}
               <span className="text-yellow-400 font-semibold hover:underline transition-colors duration-200 cursor-pointer"
                 onClick={handleSignUp}>
@@ -142,34 +150,36 @@ export default function LoginPage() {
             </div>
 
             {/* Divider */}
-            <div className="flex justify-center items-center mt-2">
-              <div className="w-full border-b border-1 border-[#F1F2F4]"></div>
-              <div className="text-center text-[14px] text-[#687588] my-4 whitespace-nowrap px-2 leading-[160%]">Or login with</div>
-              <div className="w-full border-b border-1 border-[#F1F2F4]"></div>
+            <div className="flex justify-center items-center my-6">
+              <div className="flex-grow border-b border-gray-200"></div>
+              <div className="text-center text-sm text-gray-500 px-2">Or login with</div>
+              <div className="flex-grow border-b border-gray-200"></div>
             </div>
 
             {/* Social Logins */}
-            <div className="flex justify-center items-center gap-4 mt-2">
+            <div className="flex gap-4">
               <button
                 type="button"
                 onClick={handleGoogleLogin}
-                className="flex w-full h-[56px] justify-center items-center gap-2 border-[1px] border-[#E9EAEC] p-3 rounded-[12px] shadow-sm hover:shadow-md transition-shadow duration-200"
+                className="flex-1 flex justify-center items-center gap-2 border border-gray-300 p-3 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200"
               >
                 <Image src="/icons/Google.svg" alt="Google" width={22} height={22} />
-                <span className="text-[#111827] font-[500] text-[16px] leading-[150%]">Google</span>
+                <span className="text-gray-800 font-medium">Google</span>
               </button>
               <button
                 type="button"
                 onClick={handleAppleLogin}
-                className="flex w-full h-[56px] justify-center items-center gap-2 border-[1px] border-[#E9EAEC] p-3 rounded-[12px] shadow-sm hover:shadow-md transition-shadow duration-200"
+                className="flex-1 flex justify-center items-center gap-2 border border-gray-300 p-3 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200"
               >
                 <Image src="/icons/Apple.svg" alt="Apple" width={20} height={22} />
-                <span className="text-gray-800">Apple</span>
+                <span className="text-gray-800 font-medium">Apple</span>
               </button>
             </div>
-          </div>
+          </form>
+        </div>
 
-          {/* Footer */}
+        {/* Footer */}
+        <div className="mt-8">
           <div className="flex flex-col sm:flex-row gap-3 justify-center items-center text-center sm:text-left text-xs text-gray-500 border-t pt-6 mt-8">
             <div className="mb-2 sm:mb-0">
               &copy; {new Date().getFullYear()} Moodji . All rights reserved.
@@ -179,7 +189,7 @@ export default function LoginPage() {
               <span className="hover:underline cursor-pointer">Privacy Policy</span>
             </div>
           </div>
-        </form>
+        </div>
       </div>
     </div>
   );

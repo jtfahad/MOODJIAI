@@ -47,14 +47,26 @@ const ChatInput: React.FC<ChatInputProps> = ({
       >
         {/* Add Icon */}
         <div>
-          <Image
-            className="cursor-pointer w-4 h-4 sm:w-[18px] sm:h-[18px]"
-            src="/icons/Add.svg"
-            alt="Add"
-            width={18}
-            height={18}
-            onClick={onAddClick}
-          />
+          <label className="cursor-pointer">
+            <Image
+              className="w-4 h-4 sm:w-[18px] sm:h-[18px]"
+              src="/icons/Add.svg"
+              alt="Add"
+              width={18}
+              height={18}
+            />
+            <input
+              type="file"
+              className="hidden"
+              onChange={(e) => {
+          const file = e.target.files?.[0];
+          if (file && onAddClick) {
+            onAddClick();
+            // You can also pass the file to a handler here if needed
+          }
+              }}
+            />
+          </label>
         </div>
 
         {/* Text Input */}

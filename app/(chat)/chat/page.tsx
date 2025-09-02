@@ -5,8 +5,6 @@ import { Paperclip } from "lucide-react";
 import { backgrounds } from "@/constants/moodBackgrounds";
 import ChatSection from "./components/sections/ChatSection";
 import ChatInput from "./components/ui/ChatIput";
-
-
 // --------------------
 // Types
 // --------------------
@@ -15,11 +13,9 @@ interface ChatMessage {
   type: "user" | "ai";
   text: string;
 }
-
 // --------------------
 // Reusable Components
 // --------------------
-
 const OptionButton: React.FC<{ label: string }> = ({ label }) => (
   <button
     className="
@@ -34,7 +30,6 @@ const OptionButton: React.FC<{ label: string }> = ({ label }) => (
     {label}
   </button>
 );
-
 const FileUploadButton: React.FC = () => (
   <label
     htmlFor="file-upload"
@@ -51,51 +46,96 @@ const FileUploadButton: React.FC = () => (
     <input id="file-upload" type="file" className="hidden" multiple />
   </label>
 );
-
 // --------------------
 // Main Screen
 // --------------------
-
 const NewChatScreen: React.FC = () => {
   const [bgIndex, setBgIndex] = useState(0);
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
   const [chatStarted, setChatStarted] = useState(false);
   const [isThinking, setIsThinking] = useState(false);
-
   const handleBgChange = () => {
     setBgIndex((prev) => (prev + 1) % backgrounds.length);
   };
-
   const currentBg = backgrounds[bgIndex];
-
-  const handleSendPrompt = (message: string) => {
+  // --------------------
+  // Send user prompt and make API call
+  // --------------------
+ const handleSendPrompt = async (message: string) => {
     if (!message.trim()) return;
+    if (isThinking) return;
 
     const newUserMessage: ChatMessage = {
       id: Date.now().toString(),
       type: "user",
       text: message,
     };
-
     setChatMessages((prev) => [...prev, newUserMessage]);
     setChatStarted(true);
     setIsThinking(true);
 
-    // mock AI response
-    setTimeout(() => {
-      const newAiMessage: ChatMessage = {
-        id: (Date.now() + 1).toString(),
-        type: "ai",
-        text: `AI Response: "${message}" — this is a sample.`,
-      };
-      setChatMessages((prev) => [...prev, newAiMessage]);
-      setIsThinking(false);
-    }, 1200);
-  };
+    const chatHistory = [...chatMessages.map(msg => ({
+      role: msg.type === 'user' ? 'user' : 'model',
+      parts: [{ text: msg.text }],
+    })), { role: 'user', parts: [{ text: message }] }];
+    const payload = { contents: chatHistory };
+    const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
+    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+    
+    let responseText = "Sorry, I am unable to generate a response right now. Please try again later.";
+    let retryCount = 0;
+    const maxRetries = 5;
+    let delay = 1000;
 
+    while (retryCount < maxRetries) {
+      try {
+        const response = await fetch(apiUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+
+        if (response.status === 429) {
+          console.warn(`API call failed with status 429. Retrying in ${delay / 1000}s...`);
+          await new Promise(res => setTimeout(res, delay));
+          delay *= 2;
+          retryCount++;
+          continue;
+        }
+
+        if (!response.ok) {
+          throw new Error(`API call failed with status: ${response.status}`);
+        }
+
+        const result = await response.json();
+        console.log("Gemini API response:", result);
+        const text = result?.candidates?.[0]?.content?.parts?.[0]?.text;
+          // ?.map((p: any) => p?.text || "")
+          // .join("")
+          // .trim();
+        if (text) {
+          responseText = text;
+        }
+        break;
+      } catch (error) {
+        console.error("Error calling Gemini API:", error);
+        break;
+      }
+    }
+
+    const aiResponse: ChatMessage = {
+      id: `${Date.now()}-ai`,
+      type: 'ai',
+      text: responseText,
+    };
+    setIsThinking(false);
+    setChatMessages(prev => [...prev, aiResponse]);
+
+    // This is the key change.
+    return responseText;
+};
   const handleAddAttachment = () => console.log("Add attachment clicked");
   const handleRecordVoice = () => console.log("Record voice clicked");
-
   return (
     <div
       className={`
@@ -129,7 +169,6 @@ const NewChatScreen: React.FC = () => {
           className="object-contain"
         />
       </div>
-
       {/* responsive background switch */}
       <style jsx>{`
         @media (min-width: 640px) {
@@ -138,7 +177,6 @@ const NewChatScreen: React.FC = () => {
           }
         }
       `}</style>
-
       <div className="max-w-[900px] w-full flex flex-col items-center justify-between h-full">
       {/* BEFORE CHAT STARTS */}
         {!chatStarted && (
@@ -157,7 +195,6 @@ const NewChatScreen: React.FC = () => {
                   className="mx-auto w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 transition-transform hover:scale-110"
                 />
               </div>
-
               {/* Greeting */}
               <h2 className="font-inter font-semibold text-[20px] sm:text-[26px] lg:text-[32px] leading-tight sm:leading-snug lg:leading-normal text-center mb-1">
                 Good Morning, Synaptiq
@@ -168,7 +205,6 @@ const NewChatScreen: React.FC = () => {
                   I Assist you Today?
                 </span>
               </h3>
-
               {/* Input Container */}
               <div
                 className="
@@ -194,7 +230,6 @@ const NewChatScreen: React.FC = () => {
                     }
                   }}
                 />
-
                 {/* Options Row */}
                 <div className="flex items-center gap-[10px] sm:gap-[14px] whitespace-nowrap overflow-x-auto no-scrollbar pt-2">
                   <FileUploadButton />
@@ -212,15 +247,12 @@ const NewChatScreen: React.FC = () => {
             </div>
           </div>
         )}
-
-
         {/* AFTER CHAT STARTS */}
         {chatStarted && (
           <>
             <div className="flex-1 w-full flex flex-col items-center justify-start overflow-y-auto custom-scrollbar-hidden py-6 sm:pt-6 pt-20">
               <ChatSection messages={chatMessages} isThinking={isThinking} />
             </div>
-
             {/* Chat Input */}
             <div className="w-full px-2 sm:px-4 pb-4">
               <ChatInput
@@ -235,5 +267,4 @@ const NewChatScreen: React.FC = () => {
     </div>
   );
 };
-
 export default NewChatScreen;

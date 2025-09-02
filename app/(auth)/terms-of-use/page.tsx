@@ -24,13 +24,13 @@ export default function TermsOfUse() {
         </div>
 
         {/* Content Card */}
-        <div className="w-full sm:w-auto min-w-0 md:min-w-[1000px] bg-white p-8 rounded-xl shadow-lg border border-gray-200 flex flex-col overflow-y-auto sm:overflow-hidden sm:h-auto">
+        <div className="w-full max-w-[676px] h-auto max-h-[80vh] bg-white p-8 rounded-xl shadow-lg border border-gray-200 flex flex-col overflow-y-auto custom-scrollbar">
           <div className="flex justify-center mb-6">
             <h1 className="text-3xl font-bold text-gray-800">Terms of Use</h1>
           </div>
 
           <div className="text-gray-700 leading-relaxed mb-8">
-            <h2 className="text-xl font-semibold text-gray-800 mb-2">1. Who we</h2>
+            <h2 className="text-xl font-semibold text-gray-800 mb-2">1. Who we are</h2>
             <p className="mb-4">Our website address is: <a href="https://moodme.co" className="text-yellow-500 hover:underline">https://moodme.co</a>.</p>
 
             <h2 className="text-xl font-semibold text-gray-800 mb-2">2. Comments</h2>
