@@ -48,17 +48,7 @@ export default function PostMoodFlow() {
       description:
         "Discover different ways to express your emotions and connect with others.",
       buttonText: "Next",
-      content: (
-        <div className="flex flex-col items-center justify-center w-full min-h-[300px] text-center">
-          <div className="text-6xl mb-4 text-purple-600">🎭</div>
-          <h3 className="text-xl font-semibold text-gray-800 mb-2">
-            Explore Moodjis
-          </h3>
-          <p className="text-gray-600">
-            Discover a world of expressions and find your perfect mood.
-          </p>
-        </div>
-      ),
+      content: "moodjis",
     },
     {
       title: "Choose Moods",
@@ -233,7 +223,7 @@ export default function PostMoodFlow() {
             </div>
           </div>
         </div>
-        <div className="flex justify-center items-center lg:w-1/2 px-4 lg:px-6">
+        <div className="flex justify-center items-center lg:w-[60%] px-4 lg:px-6">
           <div
             className="flex flex-col justify-center items-center w-full max-w-2xl p-6 gap-2"
             style={{
@@ -246,12 +236,11 @@ export default function PostMoodFlow() {
                 "-1.469px -1.469px 2.938px 0 #FAFBFF inset, 1.469px 1.469px 2.938px 0 #A6ABBD inset",
             }}
           >
-            <div className="flex flex-col justify-start w-full h-full bg-white rounded-3xl p-6 lg:p-8 shadow-lg overflow-auto">
-              <FormCardContent
+            <div className="flex flex-col justify-start w-full h-full bg-white rounded-3xl p-4 lg:p-6 shadow-lg overflow-auto">
+             <FormCardContent
                 currentStep={currentStep}
                 formData={formData}
                 setFormData={setFormData}
-                stepsConfig={stepsConfig}
               />
             </div>
           </div>
