@@ -5,7 +5,7 @@ import FormCardContent from "./components/layout/FormCardContent";
 // 📝 Define a type for your form data to ensure type safety
 interface FormData {
   age: string;
-  name: string;
+  birthPlace: string;
   timeExpectation: string;
   zodiacSign: string;
   background: string;
@@ -27,7 +27,7 @@ export default function PostMoodFlow() {
   // 📝 State to store all form data, using the defined FormData type
   const [formData, setFormData] = useState<FormData>({
     age: "",
-    name: "",
+    birthPlace: "",
     timeExpectation: "",
     zodiacSign: "",
     background: "",
