@@ -10,6 +10,9 @@ type FormData = {
   zodiacSign: string;
   background: string;
   identity: string;
+  headline?: string;
+  emotionTrigger?: string;
+  aboutMood?: string;
 };
 
 // Define the props for the FormCardContent component
@@ -21,13 +24,28 @@ type FormCardContentProps = {
 
 // --- Constants ---
 const AGE_RANGES = [
-  "Under 18", "18 - 24", "25 - 34", "35 - 44", 
-  "45 - 54", "55 - 64", "65 and above"
+  "Under 18",
+  "18 - 24",
+  "25 - 34",
+  "35 - 44",
+  "45 - 54",
+  "55 - 64",
+  "65 and above",
 ];
 
 const ZODIAC_SIGNS = [
-  "Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo",
-  "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces"
+  "Aries",
+  "Taurus",
+  "Gemini",
+  "Cancer",
+  "Leo",
+  "Virgo",
+  "Libra",
+  "Scorpio",
+  "Sagittarius",
+  "Capricorn",
+  "Aquarius",
+  "Pisces",
 ];
 
 const MOOD_CATEGORIES = [
@@ -37,11 +55,51 @@ const MOOD_CATEGORIES = [
   { id: "physical", label: "Physical", icon: "/icons/Physical.svg" },
 ];
 
+const MOOD_GENRES = [
+  { label: "Happy", image_url: "/moods/moodGenres/genre1.svg" },
+  { label: "Sad", image_url: "/moods/moodGenres/genre2.svg" },
+  { label: "Energetic", image_url: "/moods/moodGenres/genre3.svg" },
+  { label: "Calm", image_url: "/moods/moodGenres/genre4.svg" },
+  { label: "Romantic", image_url: "/moods/moodGenres/genre5.svg" },
+  { label: "Angry", image_url: "/moods/moodGenres/genre6.svg" },
+  { label: "Reflective", image_url: "/moods/moodGenres/genre7.svg" },
+  { label: "Adventurous", image_url: "/moods/moodGenres/genre1.svg" },
+  { label: "Melancholic", image_url: "/moods/moodGenres/genre2.svg" },
+  { label: "Playful", image_url: "/moods/moodGenres/genre3.svg" },
+  { label: "Nostalgic", image_url: "/moods/moodGenres/genre4.svg" },
+  { label: "Motivated", image_url: "/moods/moodGenres/genre5.svg" },
+  { label: "Calm", image_url: "/moods/moodGenres/genre4.svg" },
+  { label: "Romantic", image_url: "/moods/moodGenres/genre5.svg" },
+  { label: "Angry", image_url: "/moods/moodGenres/genre6.svg" },
+  { label: "Nostalgic", image_url: "/moods/moodGenres/genre4.svg" },
+];
+
 const DRAGONS = [
-  { name: "Lumeria", description: "Radiant Light", image: "./dragons/Lumeria.svg" },
-  { name: "Karios", description: "Grounded Power", image: "./dragons/Karios.svg" },
-  { name: "Zenvarion", description: "Serene Wisdom", image: "./dragons/Zenvarion.svg" },
-  { name: "Lumeria", description: "Radiant Light", image: "./dragons/Lumeria.svg" },
+  {
+    name: "Lumeria",
+    description: "Radiant Light",
+    image: "./dragons/Lumeria.svg",
+  },
+  {
+    name: "Karios",
+    description: "Grounded Power",
+    image: "./dragons/Karios.svg",
+  },
+  {
+    name: "Zenvarion",
+    description: "Serene Wisdom",
+    image: "./dragons/Zenvarion.svg",
+  },
+  {
+    name: "Lumeria",
+    description: "Radiant Light",
+    image: "./dragons/Lumeria.svg",
+  },
+];
+
+const HEADLINE_OPTIONS = [
+  { label: "My relationship", value: "my_relationship" },
+  { label: "In-General", value: "in_general" },
 ];
 
 // --- Reusable Components ---
@@ -68,7 +126,9 @@ const RadioButton: React.FC<{
   children: React.ReactNode;
   className?: string;
 }> = ({ name, value, checked, onChange, children, className = "" }) => (
-  <label className={`flex items-center justify-between p-[10px] rounded-lg border border-gray-200 bg-white cursor-pointer text-sm transition-all duration-200 hover:border-blue-400 hover:shadow-sm ${className}`}>
+  <label
+    className={`flex items-center justify-between p-[10px] rounded-lg border border-gray-200 bg-white cursor-pointer text-sm transition-all duration-200 hover:border-blue-400 hover:shadow-sm ${className}`}
+  >
     {children}
     <input
       type="radio"
@@ -100,7 +160,7 @@ const MoodCard: React.FC<{
   title: string;
   subtitle: string;
 }> = ({ title, subtitle }) => (
-  <div className="relative flex flex-col items-center justify-start pt-0 rounded-[20px] border border-gray-200 bg-white cursor-pointer text-md transition-all duration-200 hover:border-blue-400 hover:shadow-sm shadow-lg overflow-hidden">
+  <div className="relative flex flex-col items-center justify-start pt-0 rounded-[20px] border border-gray-200 bg-white cursor-pointer text-md transition-all duration-200 hover:border-blue-400 hover:shadow-lg shadow-xl overflow-hidden">
     <div className="relative w-[150px] h-20 rounded-t-[20px] overflow-hidden">
       <Image
         src="/backgroundImages/moodBgCloud.png"
@@ -111,7 +171,7 @@ const MoodCard: React.FC<{
     </div>
     <div className="relative z-10 -mt-14">
       <Image
-        src="/icons/circleGlobe.svg"
+        src="/icons/moodGlass.svg"
         alt="Orb"
         width={64}
         height={64}
@@ -120,7 +180,33 @@ const MoodCard: React.FC<{
     </div>
     <div className="flex flex-col items-center mt-2 pb-4">
       <p className="text-sm font-semibold text-gray-700">{title}</p>
-      <p className="text-sm font-semibold text-gray-700">{subtitle}</p>
+    </div>
+  </div>
+);
+
+const MoodGenreCard: React.FC<{
+  image_url: string;
+  label: string;
+}> = ({ label, image_url }) => (
+  <div
+    className="relative flex flex-col items-center justify-start pt-0 rounded-[20px] bg-gradient-to-b from-[#3AE8E1] to-[#1754D6] border border-gray-200 cursor-pointer text-md transition-all duration-200 hover:border-blue-400 hover:shadow-sm shadow-lg overflow-hidden"
+    style={{
+      borderRadius: 30,
+      background: "linear-gradient(136deg, #3AE8E1 0%, #1754D6 98.47%)",
+      boxShadow: "0 14px 44px 20px rgba(0, 0, 0, 0.02)",
+    }}
+  >
+    <div className="relative z-10 pt-2">
+      <Image
+        src={image_url}
+        alt="moode genre"
+        width={64}
+        height={64}
+        className="w-14 h-14 sm:w-16 sm:h-16 lg:w-20 lg:h-20 transition-transform hover:scale-110"
+      />
+    </div>
+    <div className="flex flex-col items-center mt-2 pb-4">
+      <p className="text-sm font-semibold text-[#E4F2FB]">{label}</p>
     </div>
   </div>
 );
@@ -135,7 +221,7 @@ const FormCardContent: React.FC<FormCardContentProps> = ({
   // Memoized handlers to prevent unnecessary re-renders
   const handleFieldChange = useCallback(
     (field: keyof FormData) => (value: string) => {
-      setFormData(prev => ({ ...prev, [field]: value }));
+      setFormData((prev) => ({ ...prev, [field]: value }));
     },
     [setFormData]
   );
@@ -151,7 +237,7 @@ const FormCardContent: React.FC<FormCardContentProps> = ({
               name="age"
               value={ageRange}
               checked={formData.age === ageRange}
-              onChange={handleFieldChange('age')}
+              onChange={handleFieldChange("age")}
             >
               <span className="text-xs sm:text-sm">{ageRange}</span>
             </RadioButton>
@@ -164,7 +250,7 @@ const FormCardContent: React.FC<FormCardContentProps> = ({
               name="age"
               value={ageRange}
               checked={formData.age === ageRange}
-              onChange={handleFieldChange('age')}
+              onChange={handleFieldChange("age")}
             >
               <span className="text-xs sm:text-sm">{ageRange}</span>
             </RadioButton>
@@ -176,7 +262,7 @@ const FormCardContent: React.FC<FormCardContentProps> = ({
       <FormField label="Where were you born?" required>
         <TextInput
           value={formData.birthPlace}
-          onChange={handleFieldChange('birthPlace')}
+          onChange={handleFieldChange("birthPlace")}
           placeholder="Enter your birth place"
         />
       </FormField>
@@ -185,7 +271,7 @@ const FormCardContent: React.FC<FormCardContentProps> = ({
       <FormField label="How much time do you expect to spend here?" required>
         <TextInput
           value={formData.timeExpectation}
-          onChange={handleFieldChange('timeExpectation')}
+          onChange={handleFieldChange("timeExpectation")}
           placeholder="Tell us about your expectations..."
         />
       </FormField>
@@ -194,7 +280,7 @@ const FormCardContent: React.FC<FormCardContentProps> = ({
       <FormField label="What's your zodiac sign?" required>
         <select
           value={formData.zodiacSign}
-          onChange={(e) => handleFieldChange('zodiacSign')(e.target.value)}
+          onChange={(e) => handleFieldChange("zodiacSign")(e.target.value)}
           className="flex p-4 rounded-lg border border-gray-200 bg-white text-sm outline-none cursor-pointer transition-colors duration-200 focus:border-blue-600 focus:ring-1 focus:ring-blue-600"
         >
           <option value="">Select your zodiac sign</option>
@@ -208,17 +294,25 @@ const FormCardContent: React.FC<FormCardContentProps> = ({
 
       {/* Background and Identity */}
       <div className="flex flex-col lg:flex-row gap-4 w-full">
-        <FormField label="What's your background?" required className="w-full lg:w-1/2">
+        <FormField
+          label="What's your background?"
+          required
+          className="w-full lg:w-1/2"
+        >
           <TextInput
             value={formData.background}
-            onChange={handleFieldChange('background')}
+            onChange={handleFieldChange("background")}
             placeholder="Tell us about your background..."
           />
         </FormField>
-        <FormField label="How do you identify?" required className="w-full lg:w-1/2">
+        <FormField
+          label="How do you identify?"
+          required
+          className="w-full lg:w-1/2"
+        >
           <TextInput
             value={formData.identity}
-            onChange={handleFieldChange('identity')}
+            onChange={handleFieldChange("identity")}
             placeholder="Share how you identify"
           />
         </FormField>
@@ -257,115 +351,178 @@ const FormCardContent: React.FC<FormCardContentProps> = ({
     </div>
   );
 
-const renderStep3 = () => {
-  // Create mood cards data to avoid repetition
-  const moodCards = Array(12).fill({ title: "Calm -", subtitle: "Recharged" });
+  const renderStep3 = () => {
+    // Create mood cards data to avoid repetition
+    const moodCards = Array(16).fill({
+      title: "Calm -",
+      subtitle: "Recharged",
+    });
 
-  return (
-    <div className="flex flex-col w-full gap-4">
-      {/* Progress Indicator */}
-      <div className="flex flex-row justify-center items-center gap-4">
-        <div className="flex flex-col items-center">
-          <input type="radio" checked={step3Progress === 1} readOnly />
-          <p className="text-blue-600 mt-2 text-xs sm:text-sm text-center">Choose Moods</p>
-        </div>
-        <span className="w-9 border-t-2 border-gray-300"></span>
-        <div className="flex flex-col items-center">
-          <input type="radio" checked={step3Progress === 2} readOnly />
-          <p className="mt-2 text-xs sm:text-sm text-center">Choose Mood Genre</p>
-        </div>
-      </div>
-
-      {/* Mood Categories */}
-      <div className="flex flex-wrap justify-center gap-2 mt-2">
-        {MOOD_CATEGORIES.map((category) => (
-          <div
-            key={category.id}
-            className="rounded-full transition-colors duration-300"
-            style={{
-              borderRadius: "70px",
-              background: "rgba(125, 92, 163, 0.11)",
-            }}
-          >
-            <div className="flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full cursor-pointer transition-all duration-300">
-              <Image
-                src={category.icon}
-                alt={category.label}
-                width={20}
-                height={20}
-                className="w-4 h-4 sm:w-5 sm:h-5"
-              />
-              <span className="whitespace-nowrap text-xs sm:text-sm font-medium text-black">
-                {category.label}
-              </span>
-            </div>
+    return (
+      <div className="flex flex-col w-full gap-4">
+        {/* Progress Indicator */}
+        <div className="flex flex-row justify-center items-center gap-4">
+          <div className="flex flex-col items-center">
+            <input type="radio" checked={step3Progress === 1} readOnly />
+            <p className="text-blue-600 mt-2 text-xs sm:text-sm text-center">
+              Choose Moods
+            </p>
           </div>
-        ))}
+          <span className="w-16 h-[1px] border-t border-gray-300"></span>
+          <div className="flex flex-col items-center">
+            <input
+              type="radio"
+              checked={step3Progress === 2}
+              readOnly
+              disabled
+            />
+            <p className="mt-2 text-xs sm:text-sm text-center">Mood Genre</p>
+          </div>
+        </div>
+
+        {/* Mood Categories */}
+        <div className="flex flex-wrap justify-center gap-2 mt-2">
+          {MOOD_CATEGORIES.map((category) => (
+            <div
+              key={category.id}
+              className="rounded-full transition-colors duration-300"
+              style={{
+                borderRadius: "70px",
+                background: "rgba(125, 92, 163, 0.11)",
+              }}
+            >
+              <div className="flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full cursor-pointer transition-all duration-300">
+                <Image
+                  src={category.icon}
+                  alt={category.label}
+                  width={20}
+                  height={20}
+                  className="w-4 h-4 sm:w-5 sm:h-5"
+                />
+                <span className="whitespace-nowrap text-xs sm:text-sm font-medium text-black">
+                  {category.label}
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Mood Cards Grid */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 mt-4">
+          {moodCards.map((card, index) => (
+            <MoodCard key={index} title={card.title} subtitle={card.subtitle} />
+          ))}
+        </div>
       </div>
+    );
+  };
 
-      {/* Mood Cards Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 mt-4">
-        {moodCards.map((card, index) => (
-          <MoodCard key={index} title={card.title} subtitle={card.subtitle} />
-        ))}
+  const renderStep4 = () => {
+    return (
+      <div className="flex flex-col w-full gap-4">
+        {/* Progress Indicator */}
+        <div className="flex flex-row justify-center items-center gap-4">
+          <div className="flex flex-col items-center">
+            <Image
+              src="./icons/StepSuccess.svg"
+              alt="Step Success"
+              width={12}
+              height={12}
+              className="w-2 h-2 sm:w-5 sm:h-5"
+            />
+            {/* <input type="radio" checked={step3Progress === 1} readOnly /> */}
+            <p className="text-blue-600 mt-2 text-xs sm:text-sm text-center">
+              Choose Moods
+            </p>
+          </div>
+          <span className="w-16 h-[1px] border-t border-blue-600"></span>
+          <div className="flex flex-col items-center mt-2">
+            <input
+              className="p-2"
+              type="radio"
+              checked={step3Progress === 1}
+              readOnly
+            />
+            <p className="mt-2 text-xs sm:text-sm text-center text-blue-600">
+              Mood Genre
+            </p>
+          </div>
+        </div>
+
+        {/* Mood Cards Grid */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 mt-4">
+          {MOOD_GENRES.map((card, index) => (
+            <MoodGenreCard
+              key={index}
+              label={card.label}
+              image_url={card.image_url}
+            />
+          ))}
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  };
+  const renderStep5 = () => {
+    return (
+      <div className="flex flex-col items-center justify-center w-full min-h-[300px] text-center">
+        <div className="grid grid-cols-2 sm:grid-cols-2 gap-2 w-full mb-6">
+          {HEADLINE_OPTIONS.map((option) => (
+            <RadioButton
+              key={option.value}
+              name="headline"
+              value={option.value}
+              checked={formData.headline === option.value}
+              onChange={handleFieldChange("headline")}
+            >
+              <span className="text-xs sm:text-sm">{option.label}</span>
+            </RadioButton>
+          ))}
+        </div>
+        <FormField label="Who or what is this mood about?" required>
+          <TextInput
+            value={formData.aboutMood ?? ""}
+            onChange={handleFieldChange("aboutMood")}
+            placeholder="Tell us about this mood..."
+          />
+        </FormField>
+        <FormField label="What sparked this emotion?" required>
+          <TextInput
+            value={formData.emotionTrigger ?? ""}
+            onChange={handleFieldChange("emotionTrigger")}
+            placeholder="Tell us what triggered this emotion..."
+          />
+        </FormField>
+      </div>
+    );
+  };
+  const renderStep6 = () => {
+    return (
+      <div className="flex flex-col items-center justify-center w-full min-h-[300px] text-center">
+        <div>
+          <div className="text-6xl mb-4 text-red-500">📝</div>
+          <div
+          className="w-full h-auto p-6 bg-white rounded-lg shadow-md"
+          >
 
 
-const renderStep4 = () => {
-    return (
-    <div className="flex flex-col items-center justify-center w-full min-h-[300px] text-center">
-      <div className="text-6xl mb-4 text-orange-500">😊</div>
-      <h3 className="text-xl font-semibold text-gray-800 mb-2">
-        Choose Your Moods
-      </h3>
-      <p className="text-gray-600">
-        Pick from a curated selection of moods to represent your state.
-      </p>
-    </div>
+          </div>
+        </div>
+      </div>
     );
-  }
-const renderStep5 = () => {
+  };
+  const renderStep7 = () => {
     return (
-    <div className="flex flex-col items-center justify-center w-full min-h-[300px] text-center">
-      <div className="text-6xl mb-4 text-teal-500">🎵</div>
-      <h3 className="text-xl font-semibold text-gray-800 mb-2">
-        Mood Genres
-      </h3>
-      <p className="text-gray-600">
-        Categorize your mood to find more relevant content.
-      </p>
-    </div>
+      <div className="flex flex-col items-center justify-center w-full min-h-[300px] text-center">
+         <FormField label="Don&apos;t be shy. you get what you want by asking for it." required>
+          <TextInput
+            value={formData.emotionTrigger ?? ""}
+            onChange={handleFieldChange("emotionTrigger")}
+            placeholder="Tell us what triggered this emotion..."
+          />
+        </FormField>
+      </div>
     );
-  }
-const renderStep6 = () => {
-    return (
-    <div className="flex flex-col items-center justify-center w-full min-h-[300px] text-center">
-      <div className="text-6xl mb-4 text-red-500">📝</div>
-      <h3 className="text-xl font-semibold text-gray-800 mb-2">
-        Create a Headline
-      </h3>
-      <p className="text-gray-600">
-        Your headline is the first impression; make it count!
-      </p>
-    </div>
-    );
-  }
-const renderStep7 = () => {
-    return (
-    <div className="flex flex-col items-center justify-center w-full min-h-[300px] text-center">
-      <div className="text-6xl mb-4 text-blue-500">💭</div>
-      <h3 className="text-xl font-semibold text-gray-800 mb-2">
-        Your Desires
-      </h3>
-      <p className="text-gray-600">
-        Tell us what you desire, and we&apos;ll help you find it.
-      </p>
-    </div>
-    );
-  }
+  };
 
   // Main render logic
   switch (currentStep) {
@@ -386,7 +543,6 @@ const renderStep7 = () => {
     default:
       return null;
   }
-
 };
 
 export default FormCardContent;

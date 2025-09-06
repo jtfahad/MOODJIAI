@@ -10,6 +10,8 @@ interface FormData {
   zodiacSign: string;
   background: string;
   identity: string;
+  emotionTrigger?: string;
+  aboutMood?: string;
 }
 
 // 📝 Define a type for your step configuration objects
@@ -32,6 +34,8 @@ export default function PostMoodFlow() {
     zodiacSign: "",
     background: "",
     identity: "",
+    emotionTrigger: "",
+    aboutMood: "",
   });
 
   // Centralized configuration for each step. Using an array requires a numeric index.
@@ -93,7 +97,7 @@ export default function PostMoodFlow() {
         <div className="flex flex-col items-center justify-center w-full min-h-[300px] text-center">
           <div className="text-6xl mb-4 text-red-500">📝</div>
           <h3 className="text-xl font-semibold text-gray-800 mb-2">
-            Create a Headline
+            Headline
           </h3>
           <p className="text-gray-600">
             Your headline is the first impression; make it count!
@@ -110,7 +114,7 @@ export default function PostMoodFlow() {
         <div className="flex flex-col items-center justify-center w-full min-h-[300px] text-center">
           <div className="text-6xl mb-4 text-blue-500">💭</div>
           <h3 className="text-xl font-semibold text-gray-800 mb-2">
-            Your Desires
+            What do you Desire?
           </h3>
           <p className="text-gray-600">
             Tell us what you desire, and we&apos;ll help you find it.
@@ -167,7 +171,7 @@ export default function PostMoodFlow() {
       />
     ));
   };
-  
+
   // Get the current step's configuration by subtracting 1 from the 1-indexed currentStep
   const currentStepData = stepsConfig[currentStep - 1];
 
@@ -225,19 +229,18 @@ export default function PostMoodFlow() {
         </div>
         <div className="flex justify-center items-center lg:w-[60%] px-4 lg:px-6">
           <div
-            className="flex flex-col justify-center items-center w-full max-w-2xl p-6 gap-2"
+            className="flex flex-col justify-center items-center w-full max-w-2xl p-6 gap-2 bg-[#DFE4F733]/20%"
             style={{
               borderRadius: "20px",
               border: "0.294px solid rgba(255, 255, 255, 0.40)",
-              background:
-                "linear-gradient(318deg, rgba(0, 0, 0, 0.40) 0%, rgba(255, 255, 255, 0.40) 105.18%), rgba(223, 228, 247, 0.20)",
+              // background: "linear-gradient(318deg, rgba(0, 0, 0, 0.40) 0%, rgba(255, 255, 255, 0.40) 105.18%), rgba(223, 228, 247, 0.20)",
               backgroundBlendMode: "soft-light, normal",
               boxShadow:
                 "-1.469px -1.469px 2.938px 0 #FAFBFF inset, 1.469px 1.469px 2.938px 0 #A6ABBD inset",
             }}
           >
             <div className="flex flex-col justify-start w-full h-full bg-white rounded-3xl p-4 lg:p-6 shadow-lg overflow-auto">
-             <FormCardContent
+              <FormCardContent
                 currentStep={currentStep}
                 formData={formData}
                 setFormData={setFormData}
