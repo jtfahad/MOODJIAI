@@ -13,6 +13,7 @@ type FormData = {
   headline?: string;
   emotionTrigger?: string;
   aboutMood?: string;
+  selectedDesires: string[]; // <-- Added property
 };
 
 // Define the props for the FormCardContent component
@@ -102,6 +103,60 @@ const HEADLINE_OPTIONS = [
   { label: "In-General", value: "in_general" },
 ];
 
+const DESIRES_DATA = [
+    {
+      title: "Free Desires",
+      desires: [
+        { id: "flirt", label: "Flirt", icon: "/icons/desires/flirt.svg" },
+        { id: "intimacy", label: "Intimacy", icon: "/icons/desires/intimacy.svg" },
+        { id: "grow-closer", label: "Grow Closer", icon: "/icons/desires/growCloser.svg" },
+        { id: "surprise", label: "Surprise", icon: "/icons/desires/surprise.svg" },
+        { id: "quality-time", label: "Quality Time", icon: "/icons/desires/qualityTime.svg" },
+        { id: "romance", label: "Romance", icon: "/icons/desires/romance.svg" },
+        { id: "flirt", label: "Flirt", icon: "/icons/desires/flirt.svg" },
+        { id: "intimacy", label: "Intimacy", icon: "/icons/desires/intimacy.svg" },
+        { id: "grow-closer", label: "Grow Closer", icon: "/icons/desires/growCloser.svg" },
+        { id: "surprise", label: "Surprise", icon: "/icons/desires/surprise.svg" },
+        { id: "quality-time", label: "Quality Time", icon: "/icons/desires/qualityTime.svg" },
+        { id: "romance", label: "Romance", icon: "/icons/desires/romance.svg" },
+      ],
+    },
+    {
+      title: "Teamwork - Respect",
+      desires: [
+         { id: "flirt", label: "Flirt", icon: "/icons/desires/flirt.svg" },
+        { id: "intimacy", label: "Intimacy", icon: "/icons/desires/intimacy.svg" },
+        { id: "grow-closer", label: "Grow Closer", icon: "/icons/desires/growCloser.svg" },
+        { id: "surprise", label: "Surprise", icon: "/icons/desires/surprise.svg" },
+        { id: "quality-time", label: "Quality Time", icon: "/icons/desires/qualityTime.svg" },
+        { id: "romance", label: "Romance", icon: "/icons/desires/romance.svg" },
+        { id: "flirt", label: "Flirt", icon: "/icons/desires/flirt.svg" },
+        { id: "intimacy", label: "Intimacy", icon: "/icons/desires/intimacy.svg" },
+        { id: "grow-closer", label: "Grow Closer", icon: "/icons/desires/growCloser.svg" },
+        { id: "surprise", label: "Surprise", icon: "/icons/desires/surprise.svg" },
+        { id: "quality-time", label: "Quality Time", icon: "/icons/desires/qualityTime.svg" },
+        { id: "romance", label: "Romance", icon: "/icons/desires/romance.svg" },
+      ],
+    },
+    {
+      title: "Love - Support",
+      desires: [
+         { id: "flirt", label: "Flirt", icon: "/icons/desires/flirt.svg" },
+        { id: "intimacy", label: "Intimacy", icon: "/icons/desires/intimacy.svg" },
+        { id: "grow-closer", label: "Grow Closer", icon: "/icons/desires/growCloser.svg" },
+        { id: "surprise", label: "Surprise", icon: "/icons/desires/surprise.svg" },
+        { id: "quality-time", label: "Quality Time", icon: "/icons/desires/qualityTime.svg" },
+        { id: "romance", label: "Romance", icon: "/icons/desires/romance.svg" },
+        { id: "flirt", label: "Flirt", icon: "/icons/desires/flirt.svg" },
+        { id: "intimacy", label: "Intimacy", icon: "/icons/desires/intimacy.svg" },
+        { id: "grow-closer", label: "Grow Closer", icon: "/icons/desires/growCloser.svg" },
+        { id: "surprise", label: "Surprise", icon: "/icons/desires/surprise.svg" },
+        { id: "quality-time", label: "Quality Time", icon: "/icons/desires/qualityTime.svg" },
+        { id: "romance", label: "Romance", icon: "/icons/desires/romance.svg" },
+      ],
+    },
+];
+
 // --- Reusable Components ---
 const FormField: React.FC<{
   label: string;
@@ -156,11 +211,26 @@ const TextInput: React.FC<{
   />
 );
 
+const TextAreaInput: React.FC<{
+  value: string;
+  onChange: (value: string) => void;
+  placeholder: string;
+  className?: string;
+}> = ({ value, onChange, placeholder, className = "" }) => (
+  <textarea
+    placeholder={placeholder}
+    value={value}
+    onChange={(e) => onChange(e.target.value)}
+    className={`flex p-4 rounded-lg border border-gray-200 bg-white text-sm outline-none transition-colors duration-200 focus:border-blue-600 focus:ring-1 focus:ring-blue-600 ${className}`}
+    rows={4}
+  />
+);
+
 const MoodCard: React.FC<{
   title: string;
   subtitle: string;
 }> = ({ title, subtitle }) => (
-  <div className="relative flex flex-col items-center justify-start pt-0 rounded-[20px] border border-gray-200 bg-white cursor-pointer text-md transition-all duration-200 hover:border-blue-400 hover:shadow-lg shadow-xl overflow-hidden">
+  <div className="relative max-w-[120px] min-w-[120px] min-h-[160px] max-h-[160px] flex flex-col items-center justify-start pt-0 rounded-[20px] border border-gray-200 bg-white cursor-pointer text-md transition-all duration-200 hover:border-blue-400 hover:shadow-lg shadow-xl overflow-hidden">
     <div className="relative w-[150px] h-20 rounded-t-[20px] overflow-hidden">
       <Image
         src="/backgroundImages/moodBgCloud.png"
@@ -180,6 +250,7 @@ const MoodCard: React.FC<{
     </div>
     <div className="flex flex-col items-center mt-2 pb-4">
       <p className="text-sm font-semibold text-gray-700">{title}</p>
+      <p className="text-sm font-semibold text-gray-700">{subtitle}</p>
     </div>
   </div>
 );
@@ -189,7 +260,7 @@ const MoodGenreCard: React.FC<{
   label: string;
 }> = ({ label, image_url }) => (
   <div
-    className="relative flex flex-col items-center justify-start pt-0 rounded-[20px] bg-gradient-to-b from-[#3AE8E1] to-[#1754D6] border border-gray-200 cursor-pointer text-md transition-all duration-200 hover:border-blue-400 hover:shadow-sm shadow-lg overflow-hidden"
+    className="relative min-w-[123px] max-w-[123px] min-h-[125px] max-h-[125px] flex flex-col items-center justify-center pt-0 rounded-[20px] bg-gradient-to-b from-[#3AE8E1] to-[#1754D6] border border-gray-200 cursor-pointer text-md transition-all duration-200 hover:border-blue-400 hover:shadow-sm shadow-lg overflow-hidden"
     style={{
       borderRadius: 30,
       background: "linear-gradient(136deg, #3AE8E1 0%, #1754D6 98.47%)",
@@ -211,6 +282,65 @@ const MoodGenreCard: React.FC<{
   </div>
 );
 
+const DesireCard: React.FC<{
+  id: string;
+  label: string;
+  icon: string;
+  isSelected: boolean;
+  onSelect: (id: string) => void;
+}> = ({ id, label, icon, isSelected, onSelect }) => (
+  <button
+    className={`flex flex-col items-center justify-center p-2 rounded-lg transition-all duration-200 hover:scale-105 ${isSelected ? 'border-2 border-blue-500' : ''}`}
+    onClick={() => onSelect(id)}
+  >
+    <div className="w-[50px] h-[50px] flex items-center justify-center">
+      <Image
+        src={icon}
+        alt={label}
+        width={50}
+        height={50}
+      />
+    </div>
+    <p className="mt-2 text-gray-600 text-sm">{label}</p>
+  </button>
+);
+
+const DesireSection: React.FC<{
+  title: string;
+  desires: { id: string; label: string; icon: string; }[];
+  selectedDesires: string[];
+  onSelect: (id: string) => void;
+}> = ({ title, desires, selectedDesires, onSelect }) => (
+  <div className="w-full">
+    <p className="w-full flex justify-start text-start text-base font-medium text-gray-800 mb-2">
+      {title}
+    </p>
+    <div
+      className="w-full p-4 md:p-6 bg-[#DFE4F7]/20 rounded-[20px] shadow-md"
+      style={{
+        borderRadius: 20,
+        border: "0.294px solid rgba(255, 255, 255, 0.40)",
+        backgroundBlendMode: "soft-light, normal",
+        boxShadow: "-1.469px -1.469px 2.938px 0 #FAFBFF inset, 1.469px 1.469px 2.938px 0 #A6ABBD inset",
+      }}
+    >
+      <div className="grid grid-cols-3 md:grid-cols-6 gap-x-2 gap-y-4 md:gap-x-4 md:gap-y-6 justify-items-center">
+        {desires.map((desire) => (
+          <DesireCard
+            key={desire.id}
+            id={desire.id}
+            label={desire.label}
+            icon={desire.icon}
+            isSelected={selectedDesires.includes(desire.id)}
+            onSelect={onSelect}
+          />
+        ))}
+      </div>
+    </div>
+  </div>
+);
+
+
 const FormCardContent: React.FC<FormCardContentProps> = ({
   currentStep,
   formData,
@@ -225,6 +355,23 @@ const FormCardContent: React.FC<FormCardContentProps> = ({
     },
     [setFormData]
   );
+
+  const handleDesireSelect = (id: string) => {
+    setFormData(prev => {
+      const isSelected = prev?.selectedDesires?.includes(id);
+      if (isSelected) {
+        return {
+          ...prev,
+          selectedDesires: prev?.selectedDesires?.filter(desireId => desireId !== id),
+        };
+      } else {
+        return {
+          ...prev,
+          selectedDesires: [...prev?.selectedDesires, id],
+        };
+      }
+    });
+  };
 
   const renderStep1 = () => (
     <div className="flex flex-col w-full gap-4">
@@ -408,30 +555,34 @@ const FormCardContent: React.FC<FormCardContentProps> = ({
         </div>
 
         {/* Mood Cards Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 mt-4">
-          {moodCards.map((card, index) => (
-            <MoodCard key={index} title={card.title} subtitle={card.subtitle} />
-          ))}
+        {/* Mood Cards Grid */}
+        <div className="w-full flex justify-center relative min-h-[65vh] overflow-y-hidden pb-10 ">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 mt-4 max-w-6xl absolute overflow-y-scroll h-full py-6 px-4  no-scrollbar">
+            {moodCards.map((card, index) => (
+              <MoodCard key={index} title={card.title} subtitle={card.subtitle} />
+            ))}
+          </div>
         </div>
+
       </div>
     );
   };
 
   const renderStep4 = () => {
     return (
-      <div className="flex flex-col w-full gap-4">
+      <div className="flex flex-col w-full gap-4 min-h-[65vh]">
         {/* Progress Indicator */}
         <div className="flex flex-row justify-center items-center gap-4">
           <div className="flex flex-col items-center">
             <Image
               src="./icons/StepSuccess.svg"
               alt="Step Success"
-              width={12}
-              height={12}
-              className="w-2 h-2 sm:w-5 sm:h-5"
+              width={16}
+              height={16}
+              className="w-4 h-4 sm:w-5 sm:h-5"
             />
             {/* <input type="radio" checked={step3Progress === 1} readOnly /> */}
-            <p className="text-blue-600 mt-2 text-xs sm:text-sm text-center">
+            <p className="text-blue-600 mt-3 text-xs sm:text-sm text-center">
               Choose Moods
             </p>
           </div>
@@ -443,14 +594,15 @@ const FormCardContent: React.FC<FormCardContentProps> = ({
               checked={step3Progress === 1}
               readOnly
             />
-            <p className="mt-2 text-xs sm:text-sm text-center text-blue-600">
+            <p className="mt-3 text-xs sm:text-sm text-center text-blue-600">
               Mood Genre
             </p>
           </div>
         </div>
 
         {/* Mood Cards Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 mt-4">
+        <div className="w-full flex justify-center relative min-h-[65vh] overflow-y-hidden pb-10">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4 mt-4 absolute overflow-y-scroll h-full py-5 px-2 no-scrollbar">
           {MOOD_GENRES.map((card, index) => (
             <MoodGenreCard
               key={index}
@@ -458,6 +610,7 @@ const FormCardContent: React.FC<FormCardContentProps> = ({
               image_url={card.image_url}
             />
           ))}
+        </div>
         </div>
       </div>
     );
@@ -479,33 +632,46 @@ const FormCardContent: React.FC<FormCardContentProps> = ({
           ))}
         </div>
         <FormField label="Who or what is this mood about?" required>
-          <TextInput
+          <TextAreaInput
+            value={formData.headline ?? ""}
+            onChange={handleFieldChange("headline")}
+            placeholder="Write a headline..."
+          />
+          {/* <TextInput
             value={formData.aboutMood ?? ""}
             onChange={handleFieldChange("aboutMood")}
             placeholder="Tell us about this mood..."
-          />
+          /> */}
         </FormField>
+
         <FormField label="What sparked this emotion?" required>
-          <TextInput
+          <TextAreaInput
             value={formData.emotionTrigger ?? ""}
             onChange={handleFieldChange("emotionTrigger")}
             placeholder="Tell us what triggered this emotion..."
           />
+          {/* <TextInput
+            value={formData.emotionTrigger ?? ""}
+            onChange={handleFieldChange("emotionTrigger")}
+            placeholder="Tell us what triggered this emotion..."
+          /> */}
         </FormField>
       </div>
     );
   };
   const renderStep6 = () => {
     return (
-      <div className="flex flex-col items-center justify-center w-full min-h-[300px] text-center">
-        <div>
-          <div className="text-6xl mb-4 text-red-500">📝</div>
-          <div
-          className="w-full h-auto p-6 bg-white rounded-lg shadow-md"
-          >
-
-
-          </div>
+      <div className="flex flex-col items-center justify-center w-full text-center p-4 relative min-h-[65vh] overflow-y-hidden">
+        <div className="flex flex-col gap-6 w-full h-full absolute overflow-y-scroll py-5 md:pb-0 no-scrollbar">
+          {DESIRES_DATA.map((section, index) => (
+            <DesireSection
+              key={index}
+              title={section.title}
+              desires={section.desires}
+              selectedDesires={formData.selectedDesires || []}
+              onSelect={handleDesireSelect}
+            />
+          ))}
         </div>
       </div>
     );
@@ -513,12 +679,20 @@ const FormCardContent: React.FC<FormCardContentProps> = ({
   const renderStep7 = () => {
     return (
       <div className="flex flex-col items-center justify-center w-full min-h-[300px] text-center">
-         <FormField label="Don&apos;t be shy. you get what you want by asking for it." required>
-          <TextInput
+        <FormField
+          label="Don't be shy. you get what you want by asking for it."
+          required
+        >
+          <TextAreaInput
+            value={formData.aboutMood ?? ""}
+            onChange={handleFieldChange("aboutMood")}
+            placeholder="Tell us about this mood..."
+          />
+          {/* <TextInput
             value={formData.emotionTrigger ?? ""}
             onChange={handleFieldChange("emotionTrigger")}
             placeholder="Tell us what triggered this emotion..."
-          />
+          /> */}
         </FormField>
       </div>
     );

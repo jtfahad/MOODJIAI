@@ -12,6 +12,7 @@ interface FormData {
   identity: string;
   emotionTrigger?: string;
   aboutMood?: string;
+  selectedDesires: string[]; // <-- Added propertyq
 }
 
 // 📝 Define a type for your step configuration objects
@@ -36,6 +37,7 @@ export default function PostMoodFlow() {
     identity: "",
     emotionTrigger: "",
     aboutMood: "",
+    selectedDesires: [], // <-- Initialize as an empty array
   });
 
   // Centralized configuration for each step. Using an array requires a numeric index.
@@ -175,46 +177,48 @@ export default function PostMoodFlow() {
   // Get the current step's configuration by subtracting 1 from the 1-indexed currentStep
   const currentStepData = stepsConfig[currentStep - 1];
 
-  return (
+ return (
     <div
-      className="min-h-screen p-4 lg:p-5 border-[6px] lg:border-6 border-purple-200 flex items-center justify-center"
+      className="min-h-screen p-0 lg:p-5 border-[6px] lg:border-6 border-purple-200 flex items-center justify-center sm:-mt-[0] -mt-[100px] px-4"
       style={{
         backgroundImage: 'url("/backgroundImages/postMoodBg.png")',
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
     >
-      <div className="flex flex-col lg:flex-row w-full max-w-7xl min-h-[80vh] gap-6 lg:gap-10">
-        <div className="flex flex-col justify-center items-center lg:w-1/2 px-4 lg:px-6">
+      {/* {showSuccessMessage && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
+          <div className="bg-white p-8 rounded-lg shadow-lg">
+            <p className="text-gray-800">Setup completed!</p>
+          </div>
+        </div>
+      )} */}
+
+    <div className='w-full h-full flex flex-col items-center justify-start overflow-auto sm:bg-none bg-[url("/moodBackgrounds/sm/CalmRecharged.png")] bg-no-repeat bg-center bg-contain sm:relative absolute transition-all duration-500 sm:pt-0 pt-24'>
+        <div className="flex flex-col lg:flex-row w-full max-w-7xl min-h-[80vh] gap-6 lg:gap-10 pb-[100px] sm:pb-4 pt-[150px] sm:pt-10">
+        <div className="flex flex-col justify-center items-center lg:w-1/2 px-4 lg:px-6 sm:pt-0 sm:backdrop-blur-0 backdrop-blur-lg">
           <div className="flex flex-col w-full max-w-md">
-            <ul className="flex gap-2 mb-4 list-none p-0 justify-start flex-wrap">
+            <ul className="hidden sm:flex gap-2 mb-4 list-none p-0 justify-start flex-wrap">
               {renderProgressIndicators()}
             </ul>
-            <p className="text-base font-bold text-gray-500 leading-[150%] tracking-wide mb-8">
+            <p className="hidden sm:flex text-base font-bold text-gray-500 leading-[150%] tracking-wide mb-8">
               Step {currentStep} of {stepsConfig.length}
             </p>
-            <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold leading-[150%] tracking-wide mb-4 bg-gradient-to-r from-[#1088F8] to-[#4A4CF3] text-transparent bg-clip-text">
+            <h1 className="text-2xl sm:text-2xl lg:text-3xl md:text-start sm:text-center text-center font-bold leading-[150%] tracking-wide mb-4 bg-gradient-to-r from-[#1088F8] to-[#4A4CF3] text-transparent bg-clip-text">
               {currentStepData?.title}
             </h1>
-            <p className="text-sm leading-[150%] tracking-wide mb-10 text-gray-600">
+            <p className="text-sm md:text-start sm:text-center text-center leading-[150%] tracking-wide mb-10 text-gray-800">
               {currentStepData?.description}
             </p>
-            <div className="flex gap-3 flex-row flex-wrap items-center">
+            {/* Desktop and Tablet buttons */}
+            <div className="hidden sm:flex gap-3 flex-row flex-wrap items-center">
               {currentStep > 1 && (
-                <>
-                  <button
-                    onClick={handlePrevious}
-                    className="bg-gray-100 text-blue-600 border-2 border-blue-600 py-4 px-6 rounded-2xl text-sm font-semibold cursor-pointer transition-all duration-200 hover:bg-blue-600 hover:text-white w-24 h-14"
-                  >
-                    Back
-                  </button>
-                  <button
-                    onClick={handleSkip}
-                    className="bg-gray-200 text-gray-700 border-2 border-gray-300 py-4 px-6 rounded-2xl text-sm font-semibold cursor-pointer transition-all duration-200 hover:bg-gray-300 hover:border-gray-400 w-24 h-14"
-                  >
-                    Skip
-                  </button>
-                </>
+                <button
+                  onClick={handlePrevious}
+                  className="bg-gray-100 text-blue-600 border-2 border-blue-600 py-4 px-6 rounded-2xl text-sm font-semibold cursor-pointer transition-all duration-200 hover:bg-blue-600 hover:text-white w-24 h-14"
+                >
+                  Back
+                </button>
               )}
               <button
                 onClick={handleNext}
@@ -227,19 +231,11 @@ export default function PostMoodFlow() {
             </div>
           </div>
         </div>
-        <div className="flex justify-center items-center lg:w-[60%] px-4 lg:px-6">
+        <div className="flex justify-center items-center lg:w-[60%] px-2 sm:px-2 md:px-4 lg:px-6 relative">
           <div
-            className="flex flex-col justify-center items-center w-full max-w-2xl p-6 gap-2 bg-[#DFE4F733]/20%"
-            style={{
-              borderRadius: "20px",
-              border: "0.294px solid rgba(255, 255, 255, 0.40)",
-              // background: "linear-gradient(318deg, rgba(0, 0, 0, 0.40) 0%, rgba(255, 255, 255, 0.40) 105.18%), rgba(223, 228, 247, 0.20)",
-              backgroundBlendMode: "soft-light, normal",
-              boxShadow:
-                "-1.469px -1.469px 2.938px 0 #FAFBFF inset, 1.469px 1.469px 2.938px 0 #A6ABBD inset",
-            }}
+            className="flex flex-col justify-center items-center w-full max-w-2xl p-0 md:p-4 lg:p-6 gap-2 rounded-[20px] border border-white/40 bg-[#DFE4F7]/20 sm:shadow-none lg:shadow-[inset_-1.469px_-1.469px_2.938px_#FAFBFF,inset_1.469px_1.469px_2.938px_#A6ABBD] bg-blend-soft-light"
           >
-            <div className="flex flex-col justify-start w-full h-full bg-white rounded-3xl p-4 lg:p-6 shadow-lg overflow-auto">
+            <div className="flex flex-col justify-start w-full h-full bg-white rounded-3xl p-4 lg:p-6 shadow-lg overflow-auto pt-8">
               <FormCardContent
                 currentStep={currentStep}
                 formData={formData}
@@ -249,6 +245,28 @@ export default function PostMoodFlow() {
           </div>
         </div>
       </div>
+      {/* Mobile-only fixed buttons */}
+      <div className="fixed bottom-0 left-0 right-0 z-20 flex sm:hidden justify-center py-4 bg-white">
+        <div className="flex gap-3 flex-row flex-wrap items-center">
+          {currentStep > 1 && (
+            <button
+              onClick={handlePrevious}
+              className="bg-gray-100 text-blue-600 border-2 border-blue-600 py-4 px-6 rounded-2xl text-sm font-semibold cursor-pointer transition-all duration-200 hover:bg-blue-600 hover:text-white w-24 h-14"
+            >
+              Back
+            </button>
+          )}
+          <button
+            onClick={handleNext}
+            className={`bg-blue-600 text-white border-none py-4 px-2 rounded-2xl text-sm font-semibold cursor-pointer transition-all duration-200 hover:bg-blue-700 hover:-translate-y-0.5 shadow-lg hover:shadow-blue-200 ${
+              currentStep === 1 ? "w-48 h-14" : "w-24 h-14"
+            }`}
+          >
+            {currentStepData?.buttonText}
+          </button>
+        </div>
+      </div>
+    </div>
     </div>
   );
 }
