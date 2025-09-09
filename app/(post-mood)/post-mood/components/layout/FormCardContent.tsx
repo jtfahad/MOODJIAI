@@ -698,6 +698,60 @@ const FormCardContent: React.FC<FormCardContentProps> = ({
     );
   };
 
+    const renderReviewScreen = () => (
+    <div className="flex gap-1 flex-col items-center w-full p-4 overflow-y-auto">
+      <div className="flex justify-between w-full bg-[#e8f4ff] p-4 rounded-lg mb-6">
+        <div className="flex items-center justify-center gap-4">
+            <div className="flex">
+              <Image
+                src="/icons/desires/flirt.svg"
+                alt="Mood Icon"
+                width={40}
+                height={40}
+                className="w-10 h-10"
+              />
+            </div>
+            <p className="flex">
+              Mood name
+            </p>
+        </div>
+        <div className="flex items-center justify-center text-md font-semibold text-gray-400">#Decisive</div>
+      </div>
+      <div className="flex justify-between w-full bg-[#e8f4ff] p-4 rounded-lg mb-6">
+        <div className="flex items-center justify-center gap-4">
+            <div className="flex">
+              <Image
+                src="/icons/desires/flirt.svg"
+                alt="Mood Icon"
+                width={40}
+                height={40}
+                className="w-10 h-10"
+              />
+            </div>
+            <p className="flex">
+              Mood name
+            </p>
+        </div>
+        <div className="flex items-center justify-center text-md font-semibold text-gray-400">#Decisive</div>
+      </div>
+      <div className="flex flex-col justify-start w-full p-2 rounded-lg mb-6 border-2 border-gray-300">
+        <p className="text-md font-bold text-gray-700">Who or what is this mood about?</p>
+        <p className="text-md text-gray-400">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+      </div>
+       <div className="flex flex-col justify-start w-full p-2 rounded-lg mb-6 border-2 border-gray-300">
+        <p className="text-md font-bold text-gray-700">Who or what is this mood about?</p>
+        <p className="text-md text-gray-400">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+      </div>
+      <button
+        type="button"
+        className="w-full bg-blue-600 text-white py-3 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors duration-200"
+      >
+        Submit Mood
+      </button>
+
+    </div>
+  );
+
   // Main render logic
   switch (currentStep) {
     case 1:
@@ -714,6 +768,8 @@ const FormCardContent: React.FC<FormCardContentProps> = ({
       return renderStep6();
     case 7:
       return renderStep7();
+    case 8:
+      return renderReviewScreen();
     default:
       return null;
   }
