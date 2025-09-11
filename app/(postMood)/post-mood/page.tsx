@@ -171,7 +171,7 @@ export default function PostMoodFlow() {
   };
 
   const renderProgressIndicators = () => {
-    return Array.from({ length: stepsConfig.length-1 }, (_, index) => (
+    return Array.from({ length: stepsConfig.length - 1 }, (_, index) => (
       <li
         key={index}
         className={`w-5 h-5 rounded-[3px] cursor-pointer transition-colors duration-300 ${
@@ -187,15 +187,40 @@ export default function PostMoodFlow() {
 
  return (
     <div
-      className="min-h-screen p-0 lg:p-5 border-[6px] lg:border-6 border-purple-200 flex items-center justify-center sm:-mt-[0] -mt-[100px] px-4"
+      className="min-h-screen p-0 lg:p-5 border-0 md:border-[6px] border-purple-200 flex items-center justify-center sm:-mt-[0] -mt-[100px] px-4"
       style={{
         backgroundImage: 'url("/backgroundImages/postMoodBg.png")',
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
     >
+    <div className="flex sm:hidden absolute -top-[60px] left-0 max-w-[600px] w-full bg-red-200">
+      <Image
+        // src="/backgroundImages/cloudImage.png"
+        src="/backgroundImages/postMoodBgsm.svg"
+        alt="Moodjiverse Logo"
+        width={600}
+        height={200}
+        className="cursor-pointer absolute top-6"
+      />
+    </div>
+   {
+    currentStep === 8 ? (
+       <div className="hidden sm:block absolute bottom-2 left-0 transition-all duration-500">
+      <Image
+        src="/dragons/SeluraGrass.svg"
+        // src="/dragons/chatScreenDragon.svg"
+        alt="Chat Background"
+        width={232}
+        height={232}
+        className="object-contain"
+      />
+    </div>
+    ) : null
+   }
 
-    <div className='w-full h-full flex flex-col items-center justify-center overflow-auto sm:bg-none bg-[url("/moodBackgrounds/sm/CalmRecharge.png")] bg-no-repeat bg-center bg-contain sm:relative absolute transition-all duration-500 sm:pt-0 pt-24'>
+    {/* <div className='w-full h-full flex flex-col items-center justify-center overflow-auto sm:bg-none bg-[url("/moodBackgrounds/sm/CalmRecharged.png")] bg-no-repeat bg-center bg-contain sm:relative absolute transition-all duration-500 sm:pt-0 pt-24'> */}
+    <div className='w-full h-full flex flex-col items-center justify-center overflow-auto transition-all duration-500 sm:pt-0 pt-24'>
       <div className={`flex ${currentStep === 8 ? "flex-col justify-center items-center" : "flex-col lg:flex-row"} w-full  max-w-7xl min-h-[80vh] gap-6 lg:gap-10 pb-[100px] sm:pb-4 pt-[150px] sm:pt-10`}>
         <div className="flex w-full flex-col justify-center items-center lg:w-1/2 px-4 lg:px-6 sm:pt-0 sm:backdrop-blur-0 backdrop-blur-lg">
           <div className="flex flex-col w-full max-w-md">
@@ -209,7 +234,7 @@ export default function PostMoodFlow() {
             {
               currentStep !== 8 ? (
               <p className="hidden sm:flex text-base font-bold text-gray-500 leading-[150%] tracking-wide mb-8">
-                Step {currentStep} of {stepsConfig.length}
+                Step {currentStep} of {stepsConfig.length - 1}
               </p>
               ) : null
             }
@@ -277,7 +302,7 @@ export default function PostMoodFlow() {
       </div>
       {/* Mobile-only fixed buttons */}
       {currentStep !== 8 ? (
-        <div className="fixed bottom-0 left-0 right-0 z-20 flex sm:hidden justify-center py-4">
+        <div className="fixed bottom-0 left-0 right-0 z-20 flex sm:hidden justify-center py-2 bg-white">
           <div className="flex gap-3 flex-row flex-wrap items-center">
             {currentStep > 1 && (
               <button

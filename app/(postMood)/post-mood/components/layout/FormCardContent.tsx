@@ -637,11 +637,6 @@ const FormCardContent: React.FC<FormCardContentProps> = ({
             onChange={handleFieldChange("headline")}
             placeholder="Write a headline..."
           />
-          {/* <TextInput
-            value={formData.aboutMood ?? ""}
-            onChange={handleFieldChange("aboutMood")}
-            placeholder="Tell us about this mood..."
-          /> */}
         </FormField>
 
         <FormField label="What sparked this emotion?" required>
@@ -650,11 +645,6 @@ const FormCardContent: React.FC<FormCardContentProps> = ({
             onChange={handleFieldChange("emotionTrigger")}
             placeholder="Tell us what triggered this emotion..."
           />
-          {/* <TextInput
-            value={formData.emotionTrigger ?? ""}
-            onChange={handleFieldChange("emotionTrigger")}
-            placeholder="Tell us what triggered this emotion..."
-          /> */}
         </FormField>
       </div>
     );
@@ -688,11 +678,6 @@ const FormCardContent: React.FC<FormCardContentProps> = ({
             onChange={handleFieldChange("aboutMood")}
             placeholder="Tell us about this mood..."
           />
-          {/* <TextInput
-            value={formData.emotionTrigger ?? ""}
-            onChange={handleFieldChange("emotionTrigger")}
-            placeholder="Tell us what triggered this emotion..."
-          /> */}
         </FormField>
       </div>
     );
