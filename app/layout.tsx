@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter, Karla, Poppins, Rubik } from "next/font/google";
 import "./globals.css";
+import { Toaster } from 'sonner';
+
 
 
 
@@ -42,6 +44,7 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${karla.variable} ${poppins.variable} ${rubik.variable} antialiased`}
       >
+        <Toaster position="top-right" />
         {children}
       </body>
     </html>
