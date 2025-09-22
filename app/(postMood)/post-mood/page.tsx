@@ -6,6 +6,8 @@ import Image from "next/image";
 import { MOOD_GENRES, MoodCards } from "@/constants/moodData";
 import { v4 as uuidv4 } from 'uuid';
 import { toast as sonnerToast } from "sonner";
+import { useRouter } from 'next/navigation';
+
 
 // Define a type for your form data to ensure type safety
 interface FormData {
@@ -38,6 +40,7 @@ interface StepConfig {
 export default function PostMoodFlow() {
   const LOCAL_STORAGE_KEY = "moodFlowData";
   const USER_ID_KEY = "moodFlowUserId";
+  const navigate = useRouter();
 
   const initialFormData = React.useMemo<FormData>(() => ({
     age: "",
@@ -148,7 +151,7 @@ export default function PostMoodFlow() {
           setCurrentStep(1);
           localStorage.removeItem(LOCAL_STORAGE_KEY);
           localStorage.removeItem(USER_ID_KEY);
-
+          navigate.push('/chat');
         } catch (error) {
           console.error("Submission failed:", error);
           sonnerToast.error("Submission failed.", {
@@ -160,7 +163,7 @@ export default function PostMoodFlow() {
       };
       submitForm();
     }
-  }, [formData.isSubmitted, formData, userId, initialFormData]);
+  }, [formData.isSubmitted, formData, userId, initialFormData , navigate]);
 
   // Centralized configuration for each step.
   const stepsConfig: StepConfig[] = [
